@@ -1,0 +1,79 @@
+# Node / JavaScript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js build / output
+.next/
+out/
+build/
+
+# Local environment files
+.env
+.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+*error.log
+
+# Runtime data / PIDs
+*.pid
+*.seed
+*.pid.lock
+pids/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Test runners / caches
+/.jest/
+.vitest/
+.cypress/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build outputs
+dist/
+public/static/
+
+# Misc caches
+.cache/
+.next/cache/
+.yarn/cache/
+
+# Database / Local DB files (MongoDB)
+/data/
+/data/db/
+/dump/
+mongod.lock
+*.sqlite
+*.sqlite3
+*.db
+
+# Docker
+docker-compose.override.yml
+
+# Serverless
+.serverless/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
