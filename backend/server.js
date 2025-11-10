@@ -20,7 +20,7 @@ app.use(cors({
 
 // Routes
 app.get("/api/health", (req, res) => {
-  res.send("ReTh!nk API is running 🚀");
+  res.send("ReTh!nk API is up and running!");
 });
 app.use("/api/auth", authRoutes);
 

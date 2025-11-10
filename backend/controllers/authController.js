@@ -1,5 +1,4 @@
 import User from "../models/User.js";
-import jwt from "jsonwebtoken";
 import cookieOptions from '../utils/cookieOptions.js';
 import generateToken from '../utils/generateToken.js';
 
@@ -80,4 +79,28 @@ const logout = (req, res) => {
     res.status(200).json({ message: "Logged out successfully" });
 };
 
-export { signup, login, logout }; 
+// GET PROFILE (Protected Route)
+const getProfile = async (req, res) => {
+    try {
+        // req.user is set in authMiddleware
+        if (!req.user) {
+            return res.status(401).json({ message: "User not authorized" });
+        }
+
+        res.status(200).json({
+            message: "Profile fetched successfully",
+            user: {
+                id: req.user._id,
+                name: req.user.name,
+                username: req.user.username,
+                email: req.user.email,
+                rethinkPoints: req.user.rethinkPoints,
+                createdAt: req.user.createdAt,
+            },
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export { signup, login, logout, getProfile }; 
