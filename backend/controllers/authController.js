@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import cookieOptions from '../utils/cookieOptions.js';
+import { clearAuthCookieOptions, authCookieOptions } from '../utils/cookieOptions.js';
 import generateToken from '../utils/generateToken.js';
 
 // SIGNUP
@@ -22,7 +22,7 @@ const signup = async (req, res) => {
 
         // Generate JWT
         const token = generateToken(newUser.id);
-        res.cookie("token", token, cookieOptions);
+        res.cookie("token", token, authCookieOptions);
 
         res.status(201).json({
             message: "Signup successful",
@@ -57,7 +57,7 @@ const login = async (req, res) => {
 
         // Generate JWT
         const token = generateToken(user._id);
-        res.cookie("token", token, cookieOptions);
+        res.cookie("token", token, authCookieOptions);
 
         res.status(200).json({
             message: "Login successful",
@@ -75,7 +75,7 @@ const login = async (req, res) => {
 
 // LOGOUT
 const logout = (req, res) => {
-    res.cookie("token", "", { maxAge: 0 });
+    res.clearCookie("token", clearAuthCookieOptions);
     res.status(200).json({ message: "Logged out successfully" });
 };
 
