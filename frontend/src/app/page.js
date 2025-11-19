@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { api } from '@/lib/api';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { api } from "@/lib/api";
 
 export default function Home() {
   const router = useRouter();
@@ -32,9 +32,9 @@ export default function Home() {
     try {
       await api.logout();
       setUser(null);
-      router.push('/');
+      router.push("/");
     } catch (err) {
-      console.error('Logout error:', err);
+      console.error("Logout error:", err);
     }
   };
 
@@ -57,12 +57,20 @@ export default function Home() {
           {user ? (
             <div className="space-y-4">
               <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900">
-                <h2 className="mb-4 text-xl font-semibold text-black dark:text-white">Welcome, {user.name}!</h2>
+                <h2 className="mb-4 text-xl font-semibold text-black dark:text-white">
+                  Welcome, {user.username}!
+                </h2>
                 <div className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  <p><strong>Username:</strong> {user.username}</p>
-                  <p><strong>Email:</strong> {user.email}</p>
+                  <p>
+                    <strong>Username:</strong> {user.username}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {user.email}
+                  </p>
                   {user.rethinkPoints !== undefined && (
-                    <p><strong>ReThink Points:</strong> {user.rethinkPoints}</p>
+                    <p>
+                      <strong>ReThink Points:</strong> {user.rethinkPoints}
+                    </p>
                   )}
                 </div>
               </div>
@@ -87,7 +95,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/signup"
-                  className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] sm:w-auto"
+                  className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/8 px-5 transition-colors hover:border-transparent hover:bg-black/4 dark:border-white/[.145] dark:hover:bg-[#1a1a1a] sm:w-auto"
                 >
                   Sign Up
                 </Link>
