@@ -1,7 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 import argon2 from "argon2";
 
-const userSchema = new mongoose.Schema(
+export interface IUser extends Document {
+  username: string;
+  email: string;
+  password: string;
+  rethinkPoints: number;
+
+  matchPassword(enteredPassword: string): Promise<boolean>;
+}
+
+export interface IUserModel extends Model<IUser> {}
+
+const userSchema = new mongoose.Schema<IUser>(
   {
     username: {
       type: String,
@@ -14,12 +25,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Email is required"],
       unique: true,
-      match: [/^\S+@\S+\.\S+$/, "Please provide a valid email address"],
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Please provide a valid email address",
+      ],
     },
     password: {
       type: String,
       required: [true, "Password is required"],
-      minlength: 6,
+      minlength: [6, "Password must be at least 6 characters long"],
     },
     rethinkPoints: {
       type: Number,
@@ -32,15 +46,16 @@ const userSchema = new mongoose.Schema(
 // Hash password before saving to database
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next(); // only hash if changed or new
+
   this.password = await argon2.hash(this.password, { type: argon2.argon2id });
   next();
 });
 
 // Compare entered password with hashed one
-userSchema.methods.matchPassword = async function (enteredPassword) {
+userSchema.methods.matchPassword = async function (enteredPassword: string) {
   return await argon2.verify(this.password, enteredPassword);
 };
 
 // Create and export User model
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<IUser, IUserModel>("User", userSchema);
 export default User;
