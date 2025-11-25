@@ -1,19 +1,31 @@
 import type { CookieOptions } from "express";
-import { config } from "../config/env";
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const baseCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: config.NODE_ENV === "production",
-  sameSite: config.NODE_ENV === "production" ? "none" : "lax",
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+};
+
+export const accessCookieOptions: CookieOptions = {
+  ...baseCookieOptions,
+  path: "/",
+  maxAge: 15 * 60 * 1000,          // 15 minutes
+};
+
+export const refreshCookieOptions: CookieOptions = {
+  ...baseCookieOptions,
+  path: "/api/auth/refresh",           
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
+
+export const clearAccessCookieOptions: CookieOptions = {
+  ...baseCookieOptions,
   path: "/",
 };
 
-export const authCookieOptions: CookieOptions = {
+export const clearRefreshCookieOptions: CookieOptions = {
   ...baseCookieOptions,
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-};
-
-export const clearAuthCookieOptions: CookieOptions = {
-  ...baseCookieOptions,
-  maxAge: 0,
+  path: "/api/auth/refresh",
 };

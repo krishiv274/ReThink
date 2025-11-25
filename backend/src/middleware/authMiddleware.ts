@@ -1,16 +1,12 @@
-import { verifyAccessToken, verifyRefreshToken } from "../utils/token";
+import { verifyAccessToken } from "../utils/token";
 import type { Request, Response, NextFunction } from "express";
 import User from "../models/User";
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
-}
-
-export const protect = async (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const accessToken = req.cookies.accessToken;
 

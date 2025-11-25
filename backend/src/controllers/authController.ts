@@ -1,7 +1,16 @@
 import User from "../models/User";
 import type { Request, Response } from "express";
-import { clearAuthCookieOptions, authCookieOptions } from "../utils/cookieOptions";
-import { signAccessToken, signRefreshToken } from "../utils/token";
+import {
+  accessCookieOptions,
+  refreshCookieOptions,
+  clearAccessCookieOptions,
+  clearRefreshCookieOptions,
+} from "../utils/cookieOptions";
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyRefreshToken,
+} from "../utils/token";
 
 // SIGNUP
 const signup = async (req: Request, res: Response): Promise<void> => {
@@ -30,7 +39,11 @@ const signup = async (req: Request, res: Response): Promise<void> => {
 
     // Generate JWT
     const accessToken = signAccessToken(newUser._id.toString());
-    res.cookie("accessToken", accessToken, authCookieOptions);
+    const refreshToken = signRefreshToken(newUser._id.toString());
+
+    // Set cookies
+    res.cookie("accessToken", accessToken, accessCookieOptions);
+    res.cookie("refreshToken", refreshToken, refreshCookieOptions);
 
     res.status(201).json({
       message: "Signup successful",
@@ -55,7 +68,9 @@ const login = async (req: Request, res: Response): Promise<void> => {
     };
 
     if (!identifier || !password) {
-      res.status(400).json({ message: "Please provide username/email and password" });
+      res
+        .status(400)
+        .json({ message: "Please provide username/email and password" });
       return;
     }
 
@@ -70,7 +85,11 @@ const login = async (req: Request, res: Response): Promise<void> => {
 
     // Generate JWT
     const accessToken = signAccessToken(user._id.toString());
-    res.cookie("accessToken", accessToken, authCookieOptions);
+    const refreshToken = signRefreshToken(user._id.toString());
+
+    // Set cookies
+    res.cookie("accessToken", accessToken, accessCookieOptions);
+    res.cookie("refreshToken", refreshToken, refreshCookieOptions);
 
     res.status(200).json({
       message: "Login successful",
@@ -82,14 +101,43 @@ const login = async (req: Request, res: Response): Promise<void> => {
     });
     return;
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// REFRESH TOKENS
+export const refresh = async (req: Request, res: Response): Promise<void> => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    res.status(401).json({ message: "No refresh token provided" });
+    return;
+  }
+
+  try {
+    const decoded: any = verifyRefreshToken(refreshToken);
+    const userId = decoded._id;
+
+    // Generate new tokens
+    const newAccessToken = signAccessToken(userId);
+    const newRefreshToken = signRefreshToken(userId);
+
+    // Set new cookies
+    res.cookie("accessToken", newAccessToken, accessCookieOptions);
+    res.cookie("refreshToken", newRefreshToken, refreshCookieOptions);
+
+    res.status(200).json({ message: "Tokens refreshed successfully" });
+  } catch (error) {
+    res.status(401).json({ message: "Invalid or expired refresh token" });
   }
 };
 
 // LOGOUT
 const logout = (req: Request, res: Response): void => {
-  res.clearCookie("accessToken", clearAuthCookieOptions);
-  res.status(200).json({ message: "Logged out successfully" });
+  res.clearCookie("accessToken", clearAccessCookieOptions);
+  res.clearCookie("refreshToken", clearRefreshCookieOptions);
+
+  res.status(200).json({ message: "Logged out" });
 };
 
 // GET PROFILE (Protected Route)
@@ -107,7 +155,6 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
         username: user.username,
         email: user.email,
         rethinkPoints: user.rethinkPoints,
-        createdAt: user.createdAt,
       },
     });
   } catch (error: any) {
