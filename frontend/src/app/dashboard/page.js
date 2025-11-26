@@ -1,109 +1,155 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { api } from "@/lib/api";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { api } from '@/lib/api';
+import Sidebar from '@/components/dashboard/Sidebar';
+import Header from '@/components/dashboard/Header';
+import StatsCard from '@/components/dashboard/StatsCard';
+import UploadSection from '@/components/dashboard/UploadSection';
+import ItemsGrid from '@/components/dashboard/ItemsGrid';
+import Leaderboard from '@/components/dashboard/Leaderboard';
+import Achievements from '@/components/dashboard/Achievements';
+import TokensSection from '@/components/dashboard/TokensSection';
+import ActivityFeed from '@/components/dashboard/ActivityFeed';
+import { Package, Coins, TrendingUp, Award } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export default function Home() {
+export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState('overview');
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  });
 
   const checkAuth = async () => {
     try {
       const result = await api.getProfile();
       if (result.user) {
         setUser(result.user);
+      } else {
+        router.push('/login');
       }
     } catch (err) {
-      // Not authenticated
-      setUser(null);
+      router.push('/login');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await api.logout();
-      setUser(null);
-      router.push("/");
-    } catch (err) {
-      console.error("Logout error:", err);
-    }
-  };
-
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
-        <p className="text-zinc-600 dark:text-zinc-400">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
       </div>
     );
   }
 
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <div className="w-full">
-          <h1 className="mb-8 text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            ReTh!nk
-          </h1>
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'overview':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Welcome back, {user?.username}! 👋
+              </h1>
+              <p className="text-gray-600">Here&apos;s what&apos;s happening with your eco-journey today.</p>
+            </div>
 
-          {user ? (
-            <div className="space-y-4">
-              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900">
-                <h2 className="mb-4 text-xl font-semibold text-black dark:text-white">
-                  Welcome, {user.username}!
-                </h2>
-                <div className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  <p>
-                    <strong>Username:</strong> {user.username}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {user.email}
-                  </p>
-                  {user.rethinkPoints !== undefined && (
-                    <p>
-                      <strong>ReThink Points:</strong> {user.rethinkPoints}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700"
-              >
-                Logout
-              </button>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatsCard
+                icon={Coins}
+                label="Th!nk Tokens"
+                value="1,250"
+                change="+15.3%"
+                color="purple"
+              />
+              <StatsCard
+                icon={Package}
+                label="Items Uploaded"
+                value="24"
+                change="+8.2%"
+                color="blue"
+              />
+              <StatsCard
+                icon={TrendingUp}
+                label="Eco Score"
+                value="87"
+                change="+12.5%"
+                color="green"
+              />
+              <StatsCard
+                icon={Award}
+                label="Achievements"
+                value="8"
+                change="+2"
+                color="orange"
+              />
             </div>
-          ) : (
-            <div className="space-y-4">
-              <p className="mb-6 text-lg text-zinc-600 dark:text-zinc-400">
-                Please login or sign up to continue.
-              </p>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href="/login"
-                  className="flex h-12 w-full items-center justify-center rounded-full bg-black px-5 text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 sm:w-auto"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/8 px-5 transition-colors hover:border-transparent hover:bg-black/4 dark:border-white/[.145] dark:hover:bg-[#1a1a1a] sm:w-auto"
-                >
-                  Sign Up
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-      </main>
+
+            {/* Quick Upload */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <UploadSection />
+            </motion.div>
+
+            {/* Recent Activity */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <ActivityFeed />
+            </motion.div>
+          </div>
+        );
+
+      case 'upload':
+        return <UploadSection />;
+
+      case 'items':
+        return <ItemsGrid />;
+
+      case 'leaderboard':
+        return <Leaderboard />;
+
+      case 'achievements':
+        return <Achievements />;
+
+      case 'tokens':
+        return <TokensSection />;
+
+      case 'activity':
+        return <ActivityFeed />;
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
+      
+      <div className="flex-1 ml-64">
+        <Header user={user} />
+        
+        <main className="p-8">
+          {renderContent()}
+        </main>
+      </div>
     </div>
   );
 }
+
