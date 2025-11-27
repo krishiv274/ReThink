@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, Camera, Image as ImageIcon, X, Sparkles, Loader2 } from 'lucide-react';
 
@@ -100,7 +101,7 @@ export default function UploadSection() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="relative rounded-2xl overflow-hidden border-2 border-gray-200"
               >
-                <img src={preview} alt="Preview" className="w-full h-96 object-cover" />
+                <Image src={preview} alt="Preview" className="w-full h-96 object-cover" />
                 <button
                   onClick={clearSelection}
                   className="absolute top-4 right-4 w-8 h-8 bg-black/80 rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
@@ -143,7 +144,7 @@ export default function UploadSection() {
               exit={{ opacity: 0, x: 20 }}
               className="space-y-4"
             >
-              <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
+              <div className="bg-linear-to-br from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
                 <div className="flex items-center gap-2 mb-4">
                   <Sparkles className="w-5 h-5 text-purple-600" />
                   <h3 className="font-bold text-gray-900">AI Analysis</h3>

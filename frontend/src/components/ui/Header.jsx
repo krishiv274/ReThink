@@ -29,7 +29,7 @@ export default function Header({ user }) {
           </motion.button>
 
           <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
               {user?.username?.[0]?.toUpperCase() || 'U'}
             </div>
             <div>

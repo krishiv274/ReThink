@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Award, Lock, CheckCircle2 } from 'lucide-react';
 
 const achievements = [
@@ -55,13 +56,13 @@ export default function Achievements() {
               }`}
             >
               <div className="aspect-square relative">
-                <img src={badge.image} alt={badge.name} className="w-full h-full object-cover" />
+                <Image src={badge.image} alt={badge.name} className="w-full h-full object-cover" />
                 {!badge.owned && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
                     <Lock className="w-8 h-8 text-white" />
                   </div>
                 )}
-                <div className={`absolute top-3 right-3 px-3 py-1 bg-gradient-to-r ${getRarityColor(badge.rarity)} text-white text-xs font-bold rounded-full`}>
+                <div className={`absolute top-3 right-3 px-3 py-1 bg-linear-to-r ${getRarityColor(badge.rarity)} text-white text-xs font-bold rounded-full`}>
                   {badge.rarity}
                 </div>
               </div>
@@ -91,7 +92,7 @@ export default function Achievements() {
             >
               <div className="flex items-start gap-4">
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-3xl ${
-                  achievement.unlocked ? 'bg-gradient-to-br from-green-100 to-green-200' : 'bg-gray-100'
+                  achievement.unlocked ? 'bg-linear-to-br from-green-100 to-green-200' : 'bg-gray-100'
                 }`}>
                   {achievement.unlocked ? achievement.icon : <Lock className="w-6 h-6 text-gray-400" />}
                 </div>
@@ -103,7 +104,7 @@ export default function Achievements() {
                       <p className="text-sm text-gray-600">{achievement.description}</p>
                     </div>
                     {achievement.unlocked && (
-                      <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
                     )}
                   </div>
 
@@ -124,7 +125,7 @@ export default function Achievements() {
                           initial={{ width: 0 }}
                           animate={{ width: `${achievement.progress}%` }}
                           transition={{ duration: 1, delay: index * 0.05 }}
-                          className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                          className="h-full bg-linear-to-r from-blue-500 to-purple-500"
                         />
                       </div>
                     </div>

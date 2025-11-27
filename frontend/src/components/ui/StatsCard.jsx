@@ -29,7 +29,7 @@ export default function StatsCard({ icon: Icon, label, value, change, color = 'b
             </p>
           )}
         </div>
-        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorClasses[color]} flex items-center justify-center`}>
+        <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${colorClasses[color]} flex items-center justify-center`}>
           <Icon className="w-6 h-6 text-white" />
         </div>
       </div>

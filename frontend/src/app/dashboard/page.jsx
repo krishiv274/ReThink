@@ -3,15 +3,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
-import Sidebar from '@/components/dashboard/Sidebar';
-import Header from '@/components/dashboard/Header';
-import StatsCard from '@/components/dashboard/StatsCard';
-import UploadSection from '@/components/dashboard/UploadSection';
-import ItemsGrid from '@/components/dashboard/ItemsGrid';
-import Leaderboard from '@/components/dashboard/Leaderboard';
-import Achievements from '@/components/dashboard/Achievements';
-import TokensSection from '@/components/dashboard/TokensSection';
-import ActivityFeed from '@/components/dashboard/ActivityFeed';
+import Sidebar from '@/components/ui/Sidebar';
+import Header from '@/components/ui/Header';
+import StatsCard from '@/components/ui/StatsCard';
+import UploadSection from '@/components/ui/UploadSection';
+import ItemsGrid from '@/components/ui/ItemsGrid';
+import Leaderboard from '@/components/ui/Leaderboard';
+import Achievements from '@/components/ui/Achievements';
+import TokensSection from '@/components/ui/TokensSection';
+import ActivityFeed from '@/components/ui/ActivityFeed';
 import { Package, Coins, TrendingUp, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 

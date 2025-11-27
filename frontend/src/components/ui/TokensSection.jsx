@@ -28,7 +28,7 @@ export default function TokensSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl p-6 text-white"
+          className="bg-linear-to-br from-purple-500 to-blue-600 rounded-2xl p-6 text-white"
         >
           <div className="flex items-center justify-between mb-4">
             <Coins className="w-8 h-8" />
@@ -76,9 +76,9 @@ export default function TokensSection() {
       </div>
 
       {/* Blockchain Info */}
-      <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
+      <div className="bg-linear-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shrink-0">
             <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
               <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
             </svg>

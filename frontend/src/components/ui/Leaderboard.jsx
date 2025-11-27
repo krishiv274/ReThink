@@ -38,7 +38,7 @@ export default function Leaderboard() {
 
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         {/* Top 3 Podium */}
-        <div className="bg-gradient-to-br from-gray-50 to-white p-8 border-b border-gray-200">
+        <div className="bg-linear-to-br from-gray-50 to-white p-8 border-b border-gray-200">
           <div className="flex items-end justify-center gap-4 max-w-2xl mx-auto">
             {/* 2nd Place */}
             <motion.div
@@ -48,7 +48,7 @@ export default function Leaderboard() {
               className="flex-1 text-center"
             >
               <div className="relative inline-block mb-3">
-                <div className="w-20 h-20 bg-gradient-to-br from-gray-300 to-gray-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
+                <div className="w-20 h-20 bg-linear-to-br from-gray-300 to-gray-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
                   {mockLeaderboard[1].avatar}
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
@@ -58,7 +58,7 @@ export default function Leaderboard() {
               <p className="font-bold text-gray-900">{mockLeaderboard[1].username}</p>
               <p className="text-2xl font-bold text-gray-700 mt-1">{mockLeaderboard[1].tokens}</p>
               <p className="text-xs text-gray-500">Th!nk Tokens</p>
-              <div className="mt-4 h-24 bg-gradient-to-br from-gray-300 to-gray-500 rounded-t-lg"></div>
+              <div className="mt-4 h-24 bg-linear-to-br from-gray-300 to-gray-500 rounded-t-lg"></div>
             </motion.div>
 
             {/* 1st Place */}
@@ -69,7 +69,7 @@ export default function Leaderboard() {
               className="flex-1 text-center"
             >
               <div className="relative inline-block mb-3">
-                <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-3xl font-bold text-white">
+                <div className="w-24 h-24 bg-linear-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-3xl font-bold text-white">
                   {mockLeaderboard[0].avatar}
                 </div>
                 <div className="absolute -top-2 -right-2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
@@ -79,7 +79,7 @@ export default function Leaderboard() {
               <p className="font-bold text-gray-900">{mockLeaderboard[0].username}</p>
               <p className="text-3xl font-bold text-yellow-600 mt-1">{mockLeaderboard[0].tokens}</p>
               <p className="text-xs text-gray-500">Th!nk Tokens</p>
-              <div className="mt-4 h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-t-lg"></div>
+              <div className="mt-4 h-32 bg-linear-to-br from-yellow-400 to-yellow-600 rounded-t-lg"></div>
             </motion.div>
 
             {/* 3rd Place */}
@@ -90,7 +90,7 @@ export default function Leaderboard() {
               className="flex-1 text-center"
             >
               <div className="relative inline-block mb-3">
-                <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-2xl font-bold text-white">
+                <div className="w-20 h-20 bg-linear-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-2xl font-bold text-white">
                   {mockLeaderboard[2].avatar}
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
@@ -100,7 +100,7 @@ export default function Leaderboard() {
               <p className="font-bold text-gray-900">{mockLeaderboard[2].username}</p>
               <p className="text-2xl font-bold text-orange-600 mt-1">{mockLeaderboard[2].tokens}</p>
               <p className="text-xs text-gray-500">Th!nk Tokens</p>
-              <div className="mt-4 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-t-lg"></div>
+              <div className="mt-4 h-20 bg-linear-to-br from-orange-400 to-orange-600 rounded-t-lg"></div>
             </motion.div>
           </div>
         </div>
@@ -119,7 +119,7 @@ export default function Leaderboard() {
                 <span className="text-lg font-bold text-gray-400">#{user.rank}</span>
               </div>
 
-              <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${getRankColor(user.rank)} flex items-center justify-center text-lg font-bold text-white`}>
+              <div className={`w-12 h-12 rounded-full bg-linear-to-br ${getRankColor(user.rank)} flex items-center justify-center text-lg font-bold text-white`}>
                 {user.avatar}
               </div>
 
