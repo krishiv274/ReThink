@@ -2,10 +2,18 @@
 
 import { motion } from 'framer-motion';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function GoogleButton({ text = "Log in with Google" }) {
+  const handleGoogleLogin = () => {
+    // Redirect to backend Google OAuth endpoint
+    window.location.href = `${API_URL}/api/auth/google`;
+  };
+
   return (
     <motion.button
       type="button"
+      onClick={handleGoogleLogin}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className="flex w-full justify-center items-center gap-2 rounded-full bg-gray-100 px-3 py-3 text-sm font-semibold leading-6 text-black hover:bg-gray-200 transition-colors"

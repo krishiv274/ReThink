@@ -12,6 +12,31 @@ import {
   verifyRefreshToken,
 } from "../utils/token";
 
+// GOOGLE OAUTH CALLBACK
+const googleCallback = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.redirect(`${process.env.FRONTEND_URL}/login?error=authentication_failed`);
+      return;
+    }
+
+    const user = req.user as any;
+    
+    // Generate JWT tokens
+    const accessToken = signAccessToken(user._id.toString());
+    const refreshToken = signRefreshToken(user._id.toString());
+
+    // Set cookies
+    res.cookie("accessToken", accessToken, accessCookieOptions);
+    res.cookie("refreshToken", refreshToken, refreshCookieOptions);
+
+    // Redirect to frontend dashboard
+    res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+  } catch (error) {
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=server_error`);
+  }
+};
+
 // SIGNUP
 const signup = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -155,6 +180,9 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
         username: user.username,
         email: user.email,
         rethinkPoints: user.rethinkPoints,
+        avatar: user.avatar,
+        googleId: user.googleId,
+        createdAt: user.createdAt,
       },
     });
   } catch (error: any) {
@@ -162,4 +190,83 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { signup, login, logout, getProfile };
+// UPDATE PROFILE (Protected Route)
+const updateProfile = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ message: "User not authorized" });
+      return;
+    }
+
+    const { username, email, currentPassword, newPassword } = req.body as {
+      username?: string;
+      email?: string;
+      currentPassword?: string;
+      newPassword?: string;
+    };
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    // Update username if provided
+    if (username && username !== user.username) {
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        res.status(400).json({ message: "Username already taken" });
+        return;
+      }
+      user.username = username;
+    }
+
+    // Update email if provided
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        res.status(400).json({ message: "Email already in use" });
+        return;
+      }
+      user.email = email;
+    }
+
+    // Update password if provided
+    if (newPassword) {
+      // For OAuth users, allow setting password without current password
+      if (user.googleId && !user.password) {
+        user.password = newPassword;
+      } else {
+        // For regular users, verify current password
+        if (!currentPassword) {
+          res.status(400).json({ message: "Current password is required" });
+          return;
+        }
+        const isMatch = await user.matchPassword(currentPassword);
+        if (!isMatch) {
+          res.status(400).json({ message: "Current password is incorrect" });
+          return;
+        }
+        user.password = newPassword;
+      }
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        rethinkPoints: user.rethinkPoints,
+        avatar: user.avatar,
+        googleId: user.googleId,
+      },
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { signup, login, logout, getProfile, updateProfile, googleCallback };

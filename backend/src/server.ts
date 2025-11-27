@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
+import passport from "./config/passport";
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
 
@@ -18,6 +19,9 @@ app.use(
     credentials: true,
   })
 );
+
+// Initialize Passport
+app.use(passport.initialize());
 
 // Routes
 app.get("/api/health", (req: Request, res: Response) => {

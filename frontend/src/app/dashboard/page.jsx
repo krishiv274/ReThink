@@ -12,6 +12,7 @@ import Leaderboard from '@/components/ui/Leaderboard';
 import Achievements from '@/components/ui/Achievements';
 import TokensSection from '@/components/ui/TokensSection';
 import ActivityFeed from '@/components/ui/ActivityFeed';
+import Profile from '@/components/ui/Profile';
 import { Package, Coins, TrendingUp, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -23,7 +24,21 @@ export default function Dashboard() {
 
   useEffect(() => {
     checkAuth();
-  });
+
+    // Prevent back navigation from leaving dashboard
+    const preventBack = (e) => {
+      e.preventDefault();
+      window.history.pushState(null, '', window.location.pathname);
+      setActiveSection('overview');
+    };
+
+    window.history.pushState(null, '', window.location.pathname);
+    window.addEventListener('popstate', preventBack);
+
+    return () => {
+      window.removeEventListener('popstate', preventBack);
+    };
+  }, []); // Add empty dependency array to prevent infinite loop
 
   const checkAuth = async () => {
     try {
@@ -133,6 +148,9 @@ export default function Dashboard() {
       case 'activity':
         return <ActivityFeed />;
 
+      case 'profile':
+        return <Profile user={user} onUpdate={checkAuth} />;
+
       default:
         return null;
     }
@@ -143,7 +161,7 @@ export default function Dashboard() {
       <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
       
       <div className="flex-1 ml-64">
-        <Header user={user} />
+        <Header user={user} onSectionChange={setActiveSection} />
         
         <main className="p-8">
           {renderContent()}
