@@ -78,7 +78,13 @@ export default function ItemsGrid() {
             className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all"
           >
             <div className="relative h-48 bg-gray-100">
-              <Image src={item.image} alt={item.name} className="w-full h-full object-cover" />
+              <Image
+                src={item.image}
+                alt={item.name}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover"
+              />
               <div className="absolute top-3 right-3">
                 <button className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
                   <MoreVertical className="w-4 h-4 text-gray-700" />

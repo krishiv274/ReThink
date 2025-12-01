@@ -56,7 +56,13 @@ export default function Achievements() {
               }`}
             >
               <div className="aspect-square relative">
-                <Image src={badge.image} alt={badge.name} className="w-full h-full object-cover" />
+                <Image
+                  src={badge.image}
+                  alt={badge.name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover"
+                />
                 {!badge.owned && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
                     <Lock className="w-8 h-8 text-white" />
