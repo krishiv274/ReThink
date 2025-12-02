@@ -16,6 +16,7 @@ import {
   Share2
 } from 'lucide-react';
 import { api } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import { MATERIAL_COLORS } from '@/components/items/constants';
@@ -25,7 +26,7 @@ import DeleteItemModal from '@/components/items/DeleteItemModal';
 export default function ItemViewPage() {
   const params = useParams();
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const { user, loading: authLoading } = useAuth();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
@@ -43,12 +44,6 @@ export default function ItemViewPage() {
 
   const loadData = async () => {
     try {
-      // Load user profile
-      const userResult = await api.getProfile();
-      if (userResult.user) {
-        setUser(userResult.user);
-      }
-
       // Load item
       const itemResult = await api.getItem(params.id);
       if (itemResult.item) {
@@ -91,7 +86,7 @@ export default function ItemViewPage() {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="text-center">

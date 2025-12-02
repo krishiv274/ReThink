@@ -26,7 +26,7 @@ const menuItems = [
   { icon: User, label: 'My Profile', href: '/dashboard/profile', section: 'profile' },
 ];
 
-export default function Sidebar({ activeSection, onSectionChange }) {
+export default function Sidebar({ activeSection }) {
   const router = useRouter();
 
   const handleLogout = async () => {

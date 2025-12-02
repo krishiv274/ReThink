@@ -1,52 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { api } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import TokensSection from '@/components/ui/TokensSection';
 
 export default function TokensPage() {
-  const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadUser();
-  }, []);
-
-  const loadUser = async () => {
-    try {
-      const result = await api.getProfile();
-      if (result.user) {
-        setUser(result.user);
-      }
-    } catch (error) {
-      console.error('Error loading user:', error);
-      if (error.message?.includes('Unauthorized')) {
-        router.push('/login');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSectionChange = (section) => {
-    const routes = {
-      overview: '/dashboard',
-      items: '/dashboard/items',
-      leaderboard: '/dashboard/leaderboard',
-      achievements: '/dashboard/achievements',
-      tokens: '/dashboard/tokens',
-      activity: '/dashboard/activity',
-      profile: '/profile',
-    };
-    if (routes[section]) {
-      router.push(routes[section]);
-    }
-  };
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -61,7 +22,7 @@ export default function TokensPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <Sidebar activeSection="tokens" onSectionChange={handleSectionChange} />
+      <Sidebar activeSection="tokens" />
       
       <div className="flex-1 ml-64">
         <Header user={user} />

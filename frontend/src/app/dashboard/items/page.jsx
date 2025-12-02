@@ -1,37 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { api } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import ItemsGrid from '@/components/ui/ItemsGrid';
 
 export default function ItemsPage() {
-  const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadUser();
-  }, []);
-
-  const loadUser = async () => {
-    try {
-      const result = await api.getProfile();
-      if (result.user) {
-        setUser(result.user);
-      }
-    } catch (error) {
-      console.error('Error loading user:', error);
-      if (error.message?.includes('Unauthorized')) {
-        router.push('/login');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (

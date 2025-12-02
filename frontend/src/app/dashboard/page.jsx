@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { api } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import StatsCard from '@/components/ui/StatsCard';
@@ -12,31 +11,7 @@ import { motion } from 'framer-motion';
 
 export default function Dashboard() {
   const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    checkAuth();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const result = await api.getProfile();
-      if (result.user) {
-        setUser(result.user);
-      } else {
-        router.push('/login');
-      }
-    } catch (err) {
-      console.error('Auth check failed:', err);
-      if (err.message?.includes('Session expired') || err.message?.includes('Unauthorized')) {
-        router.push('/login');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (

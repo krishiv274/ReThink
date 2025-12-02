@@ -6,11 +6,11 @@ import { Trash2, Loader2 } from 'lucide-react';
 export default function DeleteItemModal({
   isOpen,
   onClose,
-  item,
-  onDelete,
+  itemTitle,
+  onConfirm,
   loading,
 }) {
-  if (!isOpen || !item) return null;
+  if (!isOpen) return null;
 
   return (
     <AnimatePresence>
@@ -36,7 +36,7 @@ export default function DeleteItemModal({
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Item?</h3>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete &quot;{item.title}&quot;? This action cannot be undone.
+              Are you sure you want to delete {itemTitle ? `"${itemTitle}"` : 'this item'}? This action cannot be undone.
             </p>
 
             <div className="flex gap-3">
@@ -48,7 +48,7 @@ export default function DeleteItemModal({
                 Cancel
               </button>
               <button
-                onClick={onDelete}
+                onClick={onConfirm}
                 disabled={loading}
                 className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >

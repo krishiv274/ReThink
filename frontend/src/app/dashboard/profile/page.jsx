@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
+import { useAuth } from '@/hooks/useAuth';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import ProfileHeader from '@/components/profile/ProfileHeader';
@@ -13,7 +14,7 @@ import { motion } from 'framer-motion';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const { user, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
@@ -36,11 +37,6 @@ export default function ProfilePage() {
 
   const loadProfile = async () => {
     try {
-      const authResult = await api.getProfile();
-      if (authResult.user) {
-        setUser(authResult.user);
-      }
-
       const profileResult = await api.fetchProfile();
       if (profileResult.user) {
         setProfile(profileResult.user);
@@ -107,7 +103,7 @@ export default function ProfilePage() {
     router.push('/login?deleted=true');
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="text-center">

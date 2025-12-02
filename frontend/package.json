@@ -9,10 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "-": "^0.0.1",
-    "@radix-ui/react-label": "^2.1.8",
-    "@radix-ui/react-slot": "^1.2.4",
-    "D": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.25",
@@ -25,7 +21,6 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "babel-plugin-react-compiler": "1.0.0",
-    "baseline-browser-mapping": "^2.8.32",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.6",
     "tailwindcss": "^4.1.17",
