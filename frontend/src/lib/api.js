@@ -8,6 +8,18 @@ const handleResponse = async (response) => {
   return data;
 };
 
+// Helper function to build query string from params object
+const buildQueryString = (params) => {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      searchParams.append(key, String(value));
+    }
+  });
+  const queryString = searchParams.toString();
+  return queryString ? `?${queryString}` : '';
+};
+
 export const api = {
   async signup(data) {
     const response = await fetch(`${API_BASE_URL}/auth/signup`, {
@@ -95,6 +107,100 @@ export const api = {
     if (response.status === 401) {
       throw new Error('Unauthorized');
     }
+    return handleResponse(response);
+  },
+
+  // ==========================================
+  // ITEMS CRUD OPERATIONS
+  // ==========================================
+
+  /**
+   * Get paginated items for the logged-in user
+   * @param {Object} params - Query parameters
+   * @param {number} params.page - Page number (default: 1)
+   * @param {number} params.limit - Items per page (default: 6)
+   * @param {string} params.material - Filter by material (optional)
+   * @param {string} params.sortBy - Sort by 'date' | 'score' | 'ideas' (default: 'date')
+   * @param {string} params.search - Search by title (optional)
+   */
+  async getMyItems(params = {}) {
+    const queryString = buildQueryString(params);
+    const response = await fetch(`${API_BASE_URL}/items/me${queryString}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Create a new item
+   * @param {Object} data - Item data
+   * @param {string} data.title - Item title (required)
+   * @param {string} data.material - Item material (required)
+   * @param {string} data.imageUrl - Image URL (optional)
+   */
+  async createItem(data) {
+    const response = await fetch(`${API_BASE_URL}/items`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Update an existing item
+   * @param {string} itemId - Item ID
+   * @param {Object} data - Update data
+   */
+  async updateItem(itemId, data) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Delete an item
+   * @param {string} itemId - Item ID
+   */
+  async deleteItem(itemId) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Get a single item by ID
+   * @param {string} itemId - Item ID
+   */
+  async getItem(itemId) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
     return handleResponse(response);
   },
 };

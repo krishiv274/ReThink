@@ -35,7 +35,7 @@ export default function Header({ user }) {
           </motion.button>
 
           <button 
-            onClick={() => router.push('/profile')}
+            onClick={() => router.push('/dashboard/profile')}
             className="flex items-center gap-3 pl-4 border-l border-gray-200 hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
           >
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">

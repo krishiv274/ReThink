@@ -6,11 +6,6 @@ import { api } from '@/lib/api';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import StatsCard from '@/components/ui/StatsCard';
-import UploadSection from '@/components/ui/UploadSection';
-import ItemsGrid from '@/components/ui/ItemsGrid';
-import Leaderboard from '@/components/ui/Leaderboard';
-import Achievements from '@/components/ui/Achievements';
-import TokensSection from '@/components/ui/TokensSection';
 import ActivityFeed from '@/components/ui/ActivityFeed';
 import { Package, Coins, TrendingUp, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -19,7 +14,6 @@ export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState('overview');
 
   useEffect(() => {
     checkAuth();
@@ -36,7 +30,6 @@ export default function Dashboard() {
       }
     } catch (err) {
       console.error('Auth check failed:', err);
-      // Only redirect if session truly expired (after refresh attempt)
       if (err.message?.includes('Session expired') || err.message?.includes('Unauthorized')) {
         router.push('/login');
       }
@@ -56,10 +49,14 @@ export default function Dashboard() {
     );
   }
 
-  const renderContent = () => {
-    switch (activeSection) {
-      case 'overview':
-        return (
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar activeSection="overview" />
+      
+      <div className="flex-1 ml-64">
+        <Header user={user} />
+        
+        <main className="p-8">
           <div className="space-y-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -100,13 +97,20 @@ export default function Dashboard() {
               />
             </div>
 
-            {/* Quick Upload */}
+            {/* Quick Actions - Link to My Items */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
+              className="bg-white rounded-2xl p-6 border border-gray-200"
             >
-              <UploadSection />
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
+              <button
+                onClick={() => router.push('/dashboard/items')}
+                className="w-full px-4 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-colors"
+              >
+                Upload New Item
+              </button>
             </motion.div>
 
             {/* Recent Activity */}
@@ -118,43 +122,8 @@ export default function Dashboard() {
               <ActivityFeed />
             </motion.div>
           </div>
-        );
-
-      case 'upload':
-        return <UploadSection />;
-
-      case 'items':
-        return <ItemsGrid />;
-
-      case 'leaderboard':
-        return <Leaderboard />;
-
-      case 'achievements':
-        return <Achievements />;
-
-      case 'tokens':
-        return <TokensSection />;
-
-      case 'activity':
-        return <ActivityFeed />;
-
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
-      
-      <div className="flex-1 ml-64">
-        <Header user={user} />
-        
-        <main className="p-8">
-          {renderContent()}
         </main>
       </div>
     </div>
   );
 }
-

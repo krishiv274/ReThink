@@ -8,7 +8,7 @@ import Header from '@/components/ui/Header';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfileInfoCard from '@/components/profile/ProfileInfoCard';
 import ProfileStats from '@/components/profile/ProfileStats';
-import DeleteAccountModal from '@/components/profile/DeleteAccount';
+import DeleteAccountModal from '@/components/profile/DeleteAccountModal';
 import { motion } from 'framer-motion';
 
 export default function ProfilePage() {
@@ -21,8 +21,6 @@ export default function ProfilePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteConfirm, setDeleteConfirm] = useState('');
-  const [deleting, setDeleting] = useState(false);
   const [avatarError, setAvatarError] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -105,23 +103,8 @@ export default function ProfilePage() {
     setAvatarError(false);
   };
 
-  const handleDeleteAccount = async () => {
-    if (deleteConfirm !== profile?.username) {
-      setError('Username does not match. Please type your username correctly.');
-      return;
-    }
-
-    setDeleting(true);
-    setError('');
-
-    try {
-      await api.deleteAccount();
-      await api.logout();
-      router.push('/signup?deleted=true');
-    } catch (err) {
-      setError(err.message || 'Failed to delete account');
-      setDeleting(false);
-    }
+  const handleDeleteSuccess = () => {
+    router.push('/login?deleted=true');
   };
 
   if (loading) {
@@ -143,68 +126,93 @@ export default function ProfilePage() {
         <Header user={user} />
         
         <main className="p-8">
-          <div className="max-w-4xl mx-auto">
-            <ProfileHeader 
-              editMode={editMode}
-              saving={saving}
-              onEdit={() => setEditMode(true)}
-              onSave={handleSave}
-              onCancel={handleCancel}
-            />
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* Page Title */}
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
+              <p className="text-gray-600">Manage your account settings and preferences</p>
+            </div>
 
-            {/* Messages */}
+            {/* Success/Error Messages */}
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-green-50 border border-green-200 rounded-xl text-green-700"
+              >
+                {success}
+              </motion.div>
+            )}
             {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg"
+                className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700"
               >
                 {error}
               </motion.div>
             )}
 
-            {success && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg"
-              >
-                {success}
-              </motion.div>
-            )}
+            {/* Profile Header */}
+            <ProfileHeader
+              profile={profile}
+              formData={formData}
+              editMode={editMode}
+              avatarError={avatarError}
+              setAvatarError={setAvatarError}
+              onAvatarChange={handleAvatarChange}
+              onEdit={() => setEditMode(true)}
+              onSave={handleSave}
+              onCancel={handleCancel}
+              saving={saving}
+            />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <ProfileInfoCard 
+            {/* Profile Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Profile Info */}
+              <ProfileInfoCard
                 profile={profile}
-                editMode={editMode}
                 formData={formData}
+                editMode={editMode}
                 avatarError={avatarError}
                 onInputChange={handleChange}
                 onAvatarChange={handleAvatarChange}
-                onAvatarError={() => setAvatarError(true)}
-                onDeleteClick={() => setShowDeleteModal(true)}
+                onAvatarError={setAvatarError}
               />
 
+              {/* Stats Card */}
               <ProfileStats profile={profile} />
             </div>
 
-            <DeleteAccountModal 
-              isOpen={showDeleteModal}
-              profile={profile}
-              deleteConfirm={deleteConfirm}
-              deleting={deleting}
-              error={error}
-              onConfirmChange={setDeleteConfirm}
-              onDelete={handleDeleteAccount}
-              onClose={() => {
-                setShowDeleteModal(false);
-                setDeleteConfirm('');
-                setError('');
-              }}
-            />
+            {/* Danger Zone */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-white rounded-2xl p-6 border border-red-200"
+            >
+              <h3 className="text-lg font-bold text-red-600 mb-2">Danger Zone</h3>
+              <p className="text-gray-600 mb-4">
+                Once you delete your account, there is no going back. Please be certain.
+              </p>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+              >
+                Delete Account
+              </button>
+            </motion.div>
           </div>
         </main>
       </div>
+
+      {/* Delete Account Modal */}
+      <DeleteAccountModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        username={profile?.username}
+        onDeleteSuccess={handleDeleteSuccess}
+      />
     </div>
   );
 }
