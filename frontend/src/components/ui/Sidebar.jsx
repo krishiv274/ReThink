@@ -10,7 +10,8 @@ import {
   Activity,
   Wallet,
   LogOut,
-  Sparkles
+  Sparkles,
+  User
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
@@ -23,6 +24,7 @@ const menuItems = [
   { icon: Award, label: 'Achievements', href: '/dashboard', section: 'achievements' },
   { icon: Wallet, label: 'Th!nk Tokens', href: '/dashboard', section: 'tokens' },
   { icon: Activity, label: 'Activity', href: '/dashboard', section: 'activity' },
+  { icon: User, label: 'My Profile', href: '/profile', section: 'profile' },
 ];
 
 export default function Sidebar({ activeSection, onSectionChange }) {
@@ -58,7 +60,13 @@ export default function Sidebar({ activeSection, onSectionChange }) {
           return (
             <motion.button
               key={item.section}
-              onClick={() => onSectionChange(item.section)}
+              onClick={() => {
+                if (item.section === 'profile') {
+                  router.push('/profile');
+                } else {
+                  onSectionChange(item.section);
+                }
+              }}
               whileHover={{ x: 4 }}
               whileTap={{ scale: 0.98 }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${

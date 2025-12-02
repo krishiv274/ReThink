@@ -2,8 +2,14 @@
 
 import { Bell, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Header({ user }) {
+  const router = useRouter();
+  const [avatarError, setAvatarError] = useState(false);
+
   return (
     <header className="bg-white border-b border-gray-200 px-8 py-4 sticky top-0 z-10">
       <div className="flex items-center justify-between">
@@ -28,15 +34,32 @@ export default function Header({ user }) {
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </motion.button>
 
-          <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-            <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-              {user?.username?.[0]?.toUpperCase() || 'U'}
+          <button 
+            onClick={() => router.push('/profile')}
+            className="flex items-center gap-3 pl-4 border-l border-gray-200 hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
+          >
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
+              {user?.avatar && !avatarError ? (
+                <div className="relative w-full h-full bg-linear-to-br from-purple-500 to-pink-500">
+                  <Image
+                    src={user.avatar}
+                    alt={user.username}
+                    fill
+                    className="object-cover"
+                    onError={() => setAvatarError(true)}
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-full bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-semibold text-sm">
+                  {user?.username?.[0]?.toUpperCase() || 'U'}
+                </div>
+              )}
             </div>
-            <div>
+            <div className="text-left">
               <p className="text-sm font-semibold text-gray-900">{user?.username || 'User'}</p>
               <p className="text-xs text-gray-500">{user?.email || ''}</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </header>

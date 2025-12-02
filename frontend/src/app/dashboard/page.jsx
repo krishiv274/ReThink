@@ -23,6 +23,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     checkAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAuth = async () => {
@@ -34,7 +35,11 @@ export default function Dashboard() {
         router.push('/login');
       }
     } catch (err) {
-      router.push('/login');
+      console.error('Auth check failed:', err);
+      // Only redirect if session truly expired (after refresh attempt)
+      if (err.message?.includes('Session expired') || err.message?.includes('Unauthorized')) {
+        router.push('/login');
+      }
     } finally {
       setLoading(false);
     }

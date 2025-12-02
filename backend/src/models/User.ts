@@ -5,7 +5,13 @@ export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  rethinkPoints: number;
+  avatar?: string;
+  bio?: string;
+  ecoScore: number;
+  tokensEarned: number;
+  itemsUploaded: number;
+  createdAt: Date;
+  updatedAt: Date;
 
   matchPassword(enteredPassword: string): Promise<boolean>;
 }
@@ -34,6 +40,27 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
+    },
+    avatar: {
+      type: String,
+      default: "",
+    },
+    bio: {
+      type: String,
+      default: "",
+      maxlength: [500, "Bio cannot exceed 500 characters"],
+    },
+    ecoScore: {
+      type: Number,
+      default: 0,
+    },
+    tokensEarned: {
+      type: Number,
+      default: 0,
+    },
+    itemsUploaded: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

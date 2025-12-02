@@ -51,5 +51,51 @@ export const api = {
     }
     return handleResponse(response);
   },
+
+  // Profile CRUD operations
+  async fetchProfile() {
+    const response = await fetch(`${API_BASE_URL}/profile`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  async updateProfile(data) {
+    const response = await fetch(`${API_BASE_URL}/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  async getPublicProfile(userId) {
+    const response = await fetch(`${API_BASE_URL}/profile/${userId}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    return handleResponse(response);
+  },
+
+  async deleteAccount() {
+    const response = await fetch(`${API_BASE_URL}/profile`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
 };
 

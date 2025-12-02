@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
+import profileRoutes from "./routes/profileRoutes";
 
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ app.get("/api/health", (req: Request, res: Response) => {
   res.send("ReTh!nk API is up and running!");
 });
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

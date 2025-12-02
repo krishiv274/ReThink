@@ -51,6 +51,11 @@ const signup = async (req: Request, res: Response): Promise<void> => {
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
+        avatar: newUser.avatar,
+        bio: newUser.bio,
+        ecoScore: newUser.ecoScore,
+        tokensEarned: newUser.tokensEarned,
+        itemsUploaded: newUser.itemsUploaded,
       },
     });
     return;
@@ -97,6 +102,11 @@ const login = async (req: Request, res: Response): Promise<void> => {
         id: user._id,
         username: user.username,
         email: user.email,
+        avatar: user.avatar,
+        bio: user.bio,
+        ecoScore: user.ecoScore,
+        tokensEarned: user.tokensEarned,
+        itemsUploaded: user.itemsUploaded,
       },
     });
     return;
@@ -154,7 +164,11 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
         id: user._id,
         username: user.username,
         email: user.email,
-        rethinkPoints: user.rethinkPoints,
+        avatar: user.avatar,
+        bio: user.bio,
+        ecoScore: user.ecoScore,
+        tokensEarned: user.tokensEarned,
+        itemsUploaded: user.itemsUploaded,
       },
     });
   } catch (error: any) {
