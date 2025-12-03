@@ -179,11 +179,17 @@ npm run dev
 
 ---
 
-## 🧩 License
+## 🚀 Live URLs
 
-MIT License
+🔹 Frontend (Client App)
+👉 [Click Me](https://re-think-seven.vercel.app/)
+
+🔹 Backend API
+👉 [Click Me](https://rethink-backend-civb.onrender.com)
 
 ---
+
+### 🧩 MIT License
 
 <div align="center">
 

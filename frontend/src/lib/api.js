@@ -203,5 +203,89 @@ export const api = {
     });
     return handleResponse(response);
   },
+
+  // ==========================================
+  // AI IDEAS OPERATIONS
+  // ==========================================
+
+  /**
+   * Generate AI-powered reuse ideas for an item
+   * @param {string} itemId - Item ID
+   */
+  async generateIdeas(itemId) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}/generate-ideas`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Get ideas for an item
+   * @param {string} itemId - Item ID
+   */
+  async getIdeas(itemId) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}/ideas`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Regenerate ideas for an item
+   * @param {string} itemId - Item ID
+   */
+  async regenerateIdeas(itemId) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}/regenerate-ideas`, {
+      method: 'PUT',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Generate more ideas and append to existing
+   * @param {string} itemId - Item ID
+   */
+  async generateMoreIdeas(itemId) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}/generate-more-ideas`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
+
+  /**
+   * Mark an idea as completed and award Th!nk Score
+   * @param {string} itemId - Item ID
+   * @param {number} ideaIndex - Index of the completed idea
+   */
+  async completeIdea(itemId, ideaIndex) {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}/complete-idea`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ ideaIndex }),
+    });
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return handleResponse(response);
+  },
 };
 

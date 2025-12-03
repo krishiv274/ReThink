@@ -22,6 +22,7 @@ import Header from '@/components/ui/Header';
 import { MATERIAL_COLORS } from '@/components/items/constants';
 import ItemFormModal from '@/components/items/ItemFormModal';
 import DeleteItemModal from '@/components/items/DeleteItemModal';
+import IdeasSection from '@/components/items/IdeasSection';
 
 export default function ItemViewPage() {
   const params = useParams();
@@ -36,6 +37,10 @@ export default function ItemViewPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState('');
+
+  // Ideas states
+  const [ideasLoading, setIdeasLoading] = useState(false);
+  const [ideasError, setIdeasError] = useState('');
 
   useEffect(() => {
     loadData();
@@ -83,6 +88,76 @@ export default function ItemViewPage() {
       console.error('Delete error:', error);
     } finally {
       setFormLoading(false);
+    }
+  };
+
+  const handleGenerateIdeas = async () => {
+    setIdeasLoading(true);
+    setIdeasError('');
+    try {
+      const result = await api.generateIdeas(item._id);
+      setItem(result.item);
+    } catch (error) {
+      console.error('Error generating ideas:', error);
+      setIdeasError(error.message || 'Failed to generate ideas');
+    } finally {
+      setIdeasLoading(false);
+    }
+  };
+
+  const handleRegenerateIdeas = async () => {
+    setIdeasLoading(true);
+    setIdeasError('');
+    try {
+      const result = await api.regenerateIdeas(item._id);
+      setItem(result.item);
+    } catch (error) {
+      console.error('Error regenerating ideas:', error);
+      setIdeasError(error.message || 'Failed to regenerate ideas');
+    } finally {
+      setIdeasLoading(false);
+    }
+  };
+
+  const handleCompleteIdea = async (ideaIndex, difficulty) => {
+    try {
+      const result = await api.completeIdea(item._id, ideaIndex);
+      
+      if (result.alreadyCompleted) {
+        // Idea already completed, just refresh
+        await loadData();
+        return;
+      }
+      
+      // Update local state immediately for better UX
+      setItem(prev => ({
+        ...prev,
+        completedIdeas: prev.completedIdeas.map((completed, idx) => 
+          idx === ideaIndex ? true : completed
+        ),
+        thinkScore: result.thinkScore
+      }));
+      
+      // Reload to ensure sync
+      await loadData();
+    } catch (error) {
+      console.error('Error completing idea:', error);
+      // Still reload to get correct state
+      await loadData();
+    }
+  };
+
+  const handleGenerateMore = async () => {
+    setIdeasLoading(true);
+    setIdeasError('');
+    try {
+      const result = await api.generateMoreIdeas(item._id);
+      setItem(result.item);
+    } catch (error) {
+      console.error('Error generating more ideas:', error);
+      setIdeasError(error.message || 'Failed to generate more ideas');
+    } finally {
+      setIdeasLoading(false);
     }
   };
 
@@ -239,16 +314,19 @@ export default function ItemViewPage() {
                   </motion.div>
                 </div>
 
-                {/* Ideas Section Placeholder */}
-                <div className="border-t border-gray-200 pt-8">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Reuse Ideas</h2>
-                  <div className="bg-gray-50 rounded-xl p-8 text-center">
-                    <Lightbulb className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500">
-                      AI-powered reuse ideas coming soon! Upload more items to build your eco-score.
-                    </p>
-                  </div>
-                </div>
+                {/* Ideas Section */}
+                <IdeasSection
+                  item={item}
+                  ideas={item.ideas || []}
+                  difficulties={item.difficulties || []}
+                  completedIdeas={item.completedIdeas || []}
+                  aiAnalyzed={item.aiAnalyzed || false}
+                  onGenerateIdeas={handleGenerateIdeas}
+                  onRegenerateIdeas={handleRegenerateIdeas}
+                  onCompleteIdea={handleCompleteIdea}
+                  onGenerateMore={handleGenerateMore}
+                  loading={ideasLoading}
+                />
               </div>
             </div>
           </div>

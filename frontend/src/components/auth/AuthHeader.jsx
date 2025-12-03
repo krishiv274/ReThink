@@ -12,7 +12,7 @@ export default function AuthHeader({ title, subtitle }) {
         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
         className="mb-6"
       >
-        <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/30">
+        <div className="w-12 h-12 bg-linear-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/30">
           <Sparkles className="w-6 h-6 text-white" />
         </div>
       </motion.div>

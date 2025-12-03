@@ -5,5 +5,6 @@ declare namespace NodeJS {
     JWT_ACCESS_SECRET: string;
     JWT_REFRESH_SECRET: string;
     NODE_ENV: "development" | "production";
+    GEMINI_API_KEY: string;
   }
 }

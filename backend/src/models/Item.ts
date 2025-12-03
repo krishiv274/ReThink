@@ -19,6 +19,10 @@ export interface IItem extends Document {
   title: string;
   material: Material;
   imageUrl: string;
+  ideas: string[];
+  difficulties: string[];
+  completedIdeas: boolean[];
+  aiAnalyzed: boolean;
   ideasCount: number;
   thinkScore: number;
   createdAt: Date;
@@ -54,6 +58,23 @@ const itemSchema = new Schema<IItem>(
       type: String,
       required: [true, "Image URL is required"],
       trim: true,
+    },
+    ideas: {
+      type: [String],
+      default: [],
+    },
+    difficulties: {
+      type: [String],
+      default: [],
+      enum: ['Easy', 'Medium', 'Hard', ''],
+    },
+    completedIdeas: {
+      type: [Boolean],
+      default: [],
+    },
+    aiAnalyzed: {
+      type: Boolean,
+      default: false,
     },
     ideasCount: {
       type: Number,
