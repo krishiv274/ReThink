@@ -45,8 +45,8 @@ export default function ItemsPagination({ pagination, onPageChange }) {
             onClick={() => onPageChange(page)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               currentPage === page
-                ? 'bg-black text-white'
-                : 'border border-gray-200 hover:bg-gray-50'
+                ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/30'
+                : 'border border-green-200 hover:bg-green-50'
             }`}
           >
             {page}

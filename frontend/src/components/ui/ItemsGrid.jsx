@@ -187,7 +187,7 @@ export default function ItemsGrid() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleOpenUpload}
-          className="flex items-center gap-2 px-5 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-colors"
+          className="flex items-center gap-2 px-5 py-3 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-green-500/50 transition-all"
         >
           <Plus className="w-5 h-5" />
           Upload New Item

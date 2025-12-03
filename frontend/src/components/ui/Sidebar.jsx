@@ -9,7 +9,7 @@ import {
   Activity,
   Wallet,
   LogOut,
-  Sparkles,
+  Leaf,
   User
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -39,17 +39,17 @@ export default function Sidebar({ activeSection }) {
   };
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen fixed left-0 top-0">
+    <div className="w-64 bg-white border-r border-green-100 flex flex-col h-screen fixed left-0 top-0">
       {/* Logo - Clickable to go to Dashboard */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6 border-b border-green-100">
         <button
           onClick={() => router.push('/dashboard')}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <div className="w-10 h-10 bg-black rounded-2xl flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 bg-linear-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/30">
+            <Leaf className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-xl font-bold">ReTh!nk</h1>
+          <h1 className="text-xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">ReTh!nk</h1>
         </button>
       </div>
 
@@ -70,8 +70,8 @@ export default function Sidebar({ activeSection }) {
               whileTap={{ scale: 0.98 }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-black text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? 'bg-linear-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/30'
+                  : 'text-gray-700 hover:bg-green-50 hover:text-green-700'
               }`}
             >
               <Icon className="w-5 h-5" />
@@ -82,7 +82,7 @@ export default function Sidebar({ activeSection }) {
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-green-100">
         <motion.button
           onClick={handleLogout}
           whileHover={{ x: 4 }}

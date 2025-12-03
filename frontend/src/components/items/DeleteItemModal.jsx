@@ -43,7 +43,7 @@ export default function DeleteItemModal({
               <button
                 onClick={onClose}
                 disabled={loading}
-                className="flex-1 px-4 py-3 border border-gray-200 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="flex-1 px-4 py-3 border border-green-200 rounded-xl font-medium hover:bg-green-50 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>

@@ -105,7 +105,7 @@ export default function ProfilePage() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-screen items-center justify-center bg-green-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading profile...</p>
@@ -115,7 +115,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-green-50">
       <Sidebar activeSection="profile" />
       
       <div className="flex-1 ml-64">
@@ -123,11 +123,6 @@ export default function ProfilePage() {
         
         <main className="p-8">
           <div className="max-w-4xl mx-auto space-y-6">
-            {/* Page Title */}
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-              <p className="text-gray-600">Manage your account settings and preferences</p>
-            </div>
 
             {/* Success/Error Messages */}
             {success && (

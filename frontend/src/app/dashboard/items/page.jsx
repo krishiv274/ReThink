@@ -11,7 +11,7 @@ export default function ItemsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-screen items-center justify-center bg-green-50">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-gray-400 mx-auto mb-4" />
           <p className="text-gray-600">Loading...</p>
@@ -21,7 +21,7 @@ export default function ItemsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-green-50">
       <Sidebar activeSection="items" />
       
       <div className="flex-1 ml-64">

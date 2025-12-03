@@ -99,13 +99,13 @@ export default function ItemViewPage() {
 
   if (!item) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-screen items-center justify-center bg-green-50">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Item not found</h2>
           <p className="text-gray-600 mb-6">The item you&apos;re looking for doesn&apos;t exist.</p>
           <button
             onClick={() => router.push('/dashboard')}
-            className="px-6 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-colors"
+            className="px-6 py-3 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-green-500/50 transition-all"
           >
             Back to Dashboard
           </button>
@@ -115,7 +115,7 @@ export default function ItemViewPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-green-50">
       <Sidebar activeSection="items" />
       
       <div className="flex-1 ml-64">
@@ -133,7 +133,7 @@ export default function ItemViewPage() {
             </button>
 
             {/* Main Content */}
-            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl border border-green-100 overflow-hidden shadow-sm">
               {/* Image Section */}
               <div className="relative h-80 md:h-96 bg-gray-100">
                 {item.imageUrl && !imageError ? (
@@ -182,7 +182,7 @@ export default function ItemViewPage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => setShowEditModal(true)}
-                      className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 border border-green-200 rounded-xl font-medium hover:bg-green-50 transition-colors"
                     >
                       <Edit className="w-4 h-4" />
                       Edit
@@ -195,7 +195,7 @@ export default function ItemViewPage() {
                       Delete
                     </button>
                     <button
-                      className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-green-500/50 transition-all"
                     >
                       <Share2 className="w-4 h-4" />
                       Share

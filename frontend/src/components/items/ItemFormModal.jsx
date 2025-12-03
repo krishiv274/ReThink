@@ -22,9 +22,10 @@ export default function ItemFormModal({
 }) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 
-  // Reset form when modal opens/closes or initialData changes
   useEffect(() => {
-    if (isOpen) {
+    if (!isOpen) return;
+
+    const id = setTimeout(() => {
       if (mode === 'edit' && initialData) {
         setFormData({
           title: initialData.title || '',
@@ -34,7 +35,9 @@ export default function ItemFormModal({
       } else {
         setFormData(DEFAULT_FORM_DATA);
       }
-    }
+    }, 0);
+
+    return () => clearTimeout(id);
   }, [isOpen, mode, initialData]);
 
   const handleSubmit = async (e) => {
@@ -81,7 +84,7 @@ export default function ItemFormModal({
             <button
               onClick={handleClose}
               disabled={loading}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+              className="p-2 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50"
             >
               <X className="w-5 h-5" />
             </button>
@@ -112,7 +115,7 @@ export default function ItemFormModal({
                 value={formData.material}
                 onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                 disabled={loading}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all bg-white disabled:opacity-50 disabled:bg-gray-50"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-600 transition-all bg-white disabled:opacity-50 disabled:bg-gray-50"
               >
                 {MATERIALS.filter(m => m !== 'All').map(mat => (
                   <option key={mat} value={mat}>{mat}</option>
@@ -131,7 +134,7 @@ export default function ItemFormModal({
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                 placeholder="https://example.com/image.jpg"
                 disabled={loading}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all disabled:opacity-50 disabled:bg-gray-50"
+                className="w-full px-4 py-3 border border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-600 transition-all disabled:opacity-50 disabled:bg-gray-50"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Enter a valid image URL (e.g., from Unsplash, Imgur, etc.)
@@ -149,14 +152,14 @@ export default function ItemFormModal({
                 type="button"
                 onClick={handleClose}
                 disabled={loading}
-                className="flex-1 px-4 py-3 border border-gray-200 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="flex-1 px-4 py-3 border border-green-200 rounded-xl font-medium hover:bg-green-50 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-4 py-3 bg-black text-white rounded-xl font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-3 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-green-500/50 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>

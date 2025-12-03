@@ -46,7 +46,7 @@ export default function TokensSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-6 border border-gray-200"
+          className="bg-white rounded-2xl p-6 border border-green-100"
         >
           <div className="flex items-center gap-2 mb-4">
             <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
@@ -62,7 +62,7 @@ export default function TokensSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl p-6 border border-gray-200"
+          className="bg-white rounded-2xl p-6 border border-green-100"
         >
           <div className="flex items-center gap-2 mb-4">
             <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
@@ -76,9 +76,9 @@ export default function TokensSection() {
       </div>
 
       {/* Blockchain Info */}
-      <div className="bg-linear-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
+      <div className="bg-linear-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shrink-0">
+          <div className="w-12 h-12 bg-linear-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shrink-0">
             <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
               <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
             </svg>
@@ -101,8 +101,8 @@ export default function TokensSection() {
       </div>
 
       {/* Transaction History */}
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
+      <div className="bg-white rounded-2xl border border-green-100 overflow-hidden">
+        <div className="p-6 border-b border-green-100">
           <h3 className="font-bold text-gray-900">Transaction History</h3>
         </div>
         

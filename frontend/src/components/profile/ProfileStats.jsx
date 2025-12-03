@@ -19,7 +19,7 @@ export default function ProfileStats({ profile }) {
       transition={{ delay: 0.1 }}
       className="h-full"
     >
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 h-full flex flex-col">
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-green-100 h-full flex flex-col">
         <h2 className="text-xl font-bold text-gray-900 mb-6">Statistics</h2>
         
         <div className="space-y-3 flex-1">

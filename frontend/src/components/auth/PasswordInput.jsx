@@ -7,7 +7,7 @@ export default function PasswordInput({ id, name, label, value, onChange, requir
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="relative border-b border-gray-300 focus-within:border-black transition-colors">
+    <div className="relative border-b border-gray-300 focus-within:border-green-600 transition-colors">
       <input
         id={id}
         name={name}
@@ -30,7 +30,7 @@ export default function PasswordInput({ id, name, label, value, onChange, requir
         type="button"
         onClick={() => setShowPassword((v) => !v)}
         aria-label="Toggle password visibility"
-        className="absolute right-2 top-2 text-gray-400 hover:text-gray-600 transition-colors"
+        className="absolute right-2 top-2 text-gray-400 hover:text-green-600 transition-colors"
       >
         {showPassword ? (
           <EyeOff className="w-5 h-5" />

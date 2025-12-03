@@ -11,7 +11,7 @@ export default function ActivityPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-screen items-center justify-center bg-green-50">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-gray-400 mx-auto mb-4" />
           <p className="text-gray-600">Loading...</p>
@@ -21,7 +21,7 @@ export default function ActivityPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-green-50">
       <Sidebar activeSection="activity" />
       
       <div className="flex-1 ml-64">
@@ -29,7 +29,6 @@ export default function ActivityPage() {
         
         <main className="p-8">
           <div className="max-w-4xl">
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">Activity Feed</h1>
             <ActivityFeed />
           </div>
         </main>

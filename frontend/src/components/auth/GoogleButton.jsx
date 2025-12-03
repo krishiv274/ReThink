@@ -8,7 +8,7 @@ export default function GoogleButton({ text = "Log in with Google" }) {
       type="button"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className="flex w-full justify-center items-center gap-2 rounded-full bg-gray-100 px-3 py-3 text-sm font-semibold leading-6 text-black hover:bg-gray-200 transition-colors"
+      className="flex w-full justify-center items-center gap-2 rounded-full bg-green-50 px-3 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-green-100 border border-green-100 transition-colors"
     >
       <svg className="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path

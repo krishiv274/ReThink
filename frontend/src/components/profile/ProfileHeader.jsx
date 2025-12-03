@@ -13,7 +13,7 @@ export default function ProfileHeader({ editMode, saving, onEdit, onSave, onCanc
       {!editMode ? (
         <button
           onClick={onEdit}
-          className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:shadow-lg hover:shadow-green-500/50 transition-all"
         >
           <Edit2 className="w-4 h-4" />
           Edit Profile
@@ -22,7 +22,7 @@ export default function ProfileHeader({ editMode, saving, onEdit, onSave, onCanc
         <div className="flex gap-2">
           <button
             onClick={onCancel}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors"
           >
             <X className="w-4 h-4" />
             Cancel
@@ -30,7 +30,7 @@ export default function ProfileHeader({ editMode, saving, onEdit, onSave, onCanc
           <button
             onClick={onSave}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:shadow-lg hover:shadow-green-500/50 transition-all disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             {saving ? 'Saving...' : 'Save Changes'}

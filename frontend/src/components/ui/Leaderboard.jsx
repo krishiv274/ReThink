@@ -36,7 +36,7 @@ export default function Leaderboard() {
         <p className="text-gray-600">Top contributors making a difference</p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-green-100 overflow-hidden">
         {/* Top 3 Podium */}
         <div className="bg-linear-to-br from-gray-50 to-white p-8 border-b border-gray-200">
           <div className="flex items-end justify-center gap-4 max-w-2xl mx-auto">

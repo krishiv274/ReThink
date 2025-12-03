@@ -20,7 +20,7 @@ export default function ItemCard({ item, index, onView, onEdit, onDelete }) {
         delay: index * 0.05,
         ease: [0.4, 0, 0.2, 1]
       }}
-      className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300"
+      className="bg-white rounded-2xl overflow-hidden border border-green-100 shadow-sm hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300"
     >
       {/* Image Section */}
       <div 
@@ -72,14 +72,14 @@ export default function ItemCard({ item, index, onView, onEdit, onDelete }) {
         <div className="flex gap-2">
           <button
             onClick={() => onView(item)}
-            className="flex-1 px-3 py-2.5 bg-black text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-1.5"
+            className="flex-1 px-3 py-2.5 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-lg text-sm font-medium hover:shadow-lg hover:shadow-green-500/50 transition-all flex items-center justify-center gap-1.5"
           >
             <Eye className="w-4 h-4" />
             View
           </button>
           <button
             onClick={() => onEdit(item)}
-            className="px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+            className="px-3 py-2.5 border border-green-200 rounded-lg text-sm font-medium hover:bg-green-50 transition-colors"
           >
             <Edit className="w-4 h-4" />
           </button>

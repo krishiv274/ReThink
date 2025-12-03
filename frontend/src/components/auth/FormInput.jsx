@@ -10,7 +10,7 @@ export default function FormInput({
   placeholder,
 }) {
   return (
-    <div className="relative border-b border-gray-300 focus-within:border-black transition-colors">
+    <div className="relative border-b border-gray-300 focus-within:border-green-600 transition-colors">
       <input
         id={id}
         name={name}

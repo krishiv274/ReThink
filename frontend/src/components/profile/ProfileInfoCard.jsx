@@ -20,7 +20,7 @@ export default function ProfileInfoCard({
       className="h-full"
     >
       {/* Avatar & Basic Info Card */}
-      <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 h-full">
+      <div className="bg-white rounded-2xl p-8 shadow-sm border border-green-100 h-full">
         <div className="flex flex-col items-center text-center h-full justify-center">
           <ProfileAvatar 
             profile={profile} 

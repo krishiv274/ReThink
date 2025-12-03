@@ -32,7 +32,7 @@ export default function ActivityFeed() {
         <p className="text-gray-600">Your latest eco-actions and achievements</p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-green-100 overflow-hidden">
         <div className="divide-y divide-gray-100">
           {activities.map((activity, index) => {
             const Icon = activity.icon;
