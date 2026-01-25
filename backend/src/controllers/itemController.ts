@@ -50,9 +50,6 @@ export const getMyItems = async (req: Request, res: Response): Promise<void> => 
     // Determine sort order
     let sortOptions: any = {};
     switch (sortBy) {
-      case "score":
-        sortOptions = { thinkScore: -1, createdAt: -1 };
-        break;
       case "ideas":
         sortOptions = { ideasCount: -1, createdAt: -1 };
         break;
@@ -129,7 +126,6 @@ export const createItem = async (req: Request, res: Response): Promise<void> => 
       material,
       imageUrl: imageUrl || "",
       ideasCount: 0,
-      thinkScore: Math.floor(Math.random() * 100) + 50, // Random initial score between 50-150
     });
 
     // Update user's itemsUploaded count

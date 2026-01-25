@@ -9,7 +9,6 @@ import {
   Edit, 
   Trash2, 
   Calendar, 
-  Award, 
   Lightbulb,
   Loader2,
   ImageIcon,
@@ -190,10 +189,10 @@ export default function ItemViewPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-green-50">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar activeSection="items" />
       
-      <div className="flex-1 ml-64">
+      <div className="flex-1 ml-[200px]">
         <Header user={user} />
         
         <main className="p-8">
@@ -279,23 +278,7 @@ export default function ItemViewPage() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-linear-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                        <Award className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-green-700">Th!nk Score</p>
-                        <p className="text-2xl font-bold text-green-900">+{item.thinkScore || 0}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-
+                <div className="grid grid-cols-1 gap-4 mb-8">
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Coins, Package, Calendar } from 'lucide-react';
+import { Package, Calendar } from 'lucide-react';
 
 export default function ProfileStats({ profile }) {
   // Format date safely
@@ -23,30 +23,6 @@ export default function ProfileStats({ profile }) {
         <h2 className="text-xl font-bold text-gray-900 mb-6">Statistics</h2>
         
         <div className="space-y-3 flex-1">
-          <div className="p-4 bg-linear-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-sm">
-                <Award className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-medium text-purple-700">Eco Score</p>
-                <p className="text-2xl font-bold text-purple-900">{profile?.ecoScore || 0}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-4 bg-linear-to-br from-yellow-50 to-yellow-100 rounded-xl border border-yellow-200">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center shadow-sm">
-                <Coins className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-medium text-yellow-700">Th!nk Tokens</p>
-                <p className="text-2xl font-bold text-yellow-900">{profile?.tokensEarned || 0}</p>
-              </div>
-            </div>
-          </div>
-
           <div className="p-4 bg-linear-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-sm">

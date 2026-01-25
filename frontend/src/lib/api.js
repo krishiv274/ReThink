@@ -269,7 +269,7 @@ export const api = {
   },
 
   /**
-   * Mark an idea as completed and award Th!nk Score
+   * Mark an idea as completed
    * @param {string} itemId - Item ID
    * @param {number} ideaIndex - Index of the completed idea
    */

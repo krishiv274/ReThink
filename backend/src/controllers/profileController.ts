@@ -25,7 +25,6 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
         avatar: user.avatar,
         bio: user.bio,
         ecoScore: user.ecoScore,
-        tokensEarned: user.tokensEarned,
         itemsUploaded: user.itemsUploaded,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -79,7 +78,6 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         avatar: user.avatar,
         bio: user.bio,
         ecoScore: user.ecoScore,
-        tokensEarned: user.tokensEarned,
         itemsUploaded: user.itemsUploaded,
         updatedAt: user.updatedAt,
       },
@@ -89,7 +87,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
   }
 };
 
-// GET PUBLIC PROFILE (for viewing other users - e.g., leaderboard)
+// GET PUBLIC PROFILE (for viewing other users)
 export const getPublicProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
@@ -109,7 +107,6 @@ export const getPublicProfile = async (req: Request, res: Response): Promise<voi
         avatar: user.avatar,
         bio: user.bio,
         ecoScore: user.ecoScore,
-        tokensEarned: user.tokensEarned,
         itemsUploaded: user.itemsUploaded,
         createdAt: user.createdAt,
       },

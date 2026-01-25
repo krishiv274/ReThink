@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌿 ReTh!nk – AI That Helps You Rethink Items & Reward Tokens
+# 🌿 ReTh!nk – AI That Helps You Rethink Items
 
 </div>
 
@@ -37,7 +37,7 @@ Every year, millions of perfectly reusable items end up in landfills because peo
 - 🤖 _Automation_
 - 🔗 _Blockchain_
 
-to help users **discover creative reuse ideas** and **earn eco-reward tokens (Th!nk)** for sustainable actions.
+to help users **discover creative reuse ideas** for sustainable actions.
 
 ---
 
@@ -53,7 +53,7 @@ to help users **discover creative reuse ideas** and **earn eco-reward tokens (Th
 
 **User Journey (high level)**
 
-- **User** → *Uploads item image* → **AI** → *Suggests reuse ideas* → **User** → *Completes upcycle* → **Blockchain** → *Mints Th!nk tokens*
+- **User** → *Uploads item image* → **AI** → *Suggests reuse ideas* → **User** → *Completes upcycle*
 
 
 
@@ -74,15 +74,9 @@ to help users **discover creative reuse ideas** and **earn eco-reward tokens (Th
 
 ---
 
-## 🔮 4. The Twist – Blockchain Th!nk System
+## 🔮 4. The Platform – Smart Reuse Ideas System
 
-Every verified upcycling activity rewards users with **Th!nk Tokens** — a blockchain-backed proof of sustainability.
-
-### 🌱 Tokens Give You:
-
-- On-chain **proof of eco-action**
-- Redeemable perks: _NFT badges, partner discounts, leaderboards_
-- Transparent, tamper-proof eco-tracking
+AI-powered recommendations help users discover creative ways to reuse and upcycle items sustainably.
 
 ---
 
@@ -111,17 +105,6 @@ Every verified upcycling activity rewards users with **Th!nk Tokens** — a bloc
 - Sort by date, eco-score
 - Paginated, fast results
 
-### 🪙 Blockchain
-
-- Polygon Testnet smart contract
-- Tokens minted for each eco-action
-
-### 🏆 Gamification
-
-- Leaderboards
-- Achievements
-- Eco-badges
-
 ---
 
 ## 🧱 6. Tech Stack Table
@@ -134,8 +117,7 @@ Every verified upcycling activity rewards users with **Th!nk Tokens** — a bloc
 | **Authentication** | JWT                                     |
 | **AI**             | GPT-5 Vision                            |
 | **Automation**     | n8n                                     |
-| **Blockchain**     | Solidity, Polygon, Web3.js / Ethers.js  |
-| **Hosting**        | Vercel, Render, Railway, Alchemy/Infura |
+| **Hosting**        | Vercel, Render, Railway                 |
 
 ---
 

@@ -81,7 +81,6 @@ export const generateIdeas = async (req: Request, res: Response) => {
     item.completedIdeas = Array(ideas.length).fill(false);
     item.aiAnalyzed = analyzed;
     item.ideasCount = ideas.length;
-    item.thinkScore = (item.thinkScore || 0) + 50; // Bonus points for using AI
 
     await item.save();
 
@@ -96,7 +95,6 @@ export const generateIdeas = async (req: Request, res: Response) => {
         completedIdeas: item.completedIdeas,
         aiAnalyzed: analyzed,
         ideasCount: ideas.length,
-        thinkScore: item.thinkScore,
       },
     });
   } catch (error) {
@@ -258,24 +256,14 @@ export const completeIdea = async (req: Request, res: Response) => {
     const difficulty =
       item.difficulties?.[ideaIndex] ?? "Medium";
 
-    const points =
-      difficulty.toLowerCase() === "easy"
-        ? 20
-        : difficulty.toLowerCase() === "hard"
-        ? 60
-        : 40; // default Medium
-
-    item.thinkScore = (item.thinkScore || 0) + points;
     item.completedIdeas[ideaIndex] = true;
     item.markModified("completedIdeas");
 
     await item.save();
 
     res.status(200).json({
-      message: `Idea completed! Earned ${points} Th!nk Score`,
-      points,
+      message: "Idea marked as completed",
       difficulty,
-      thinkScore: item.thinkScore,
       completed: true,
     });
   } catch (error) {

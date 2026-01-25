@@ -8,7 +8,6 @@ export interface IUser extends Document {
   avatar?: string;
   bio?: string;
   ecoScore: number;
-  tokensEarned: number;
   itemsUploaded: number;
   createdAt: Date;
   updatedAt: Date;
@@ -51,10 +50,6 @@ const userSchema = new mongoose.Schema<IUser>(
       maxlength: [500, "Bio cannot exceed 500 characters"],
     },
     ecoScore: {
-      type: Number,
-      default: 0,
-    },
-    tokensEarned: {
       type: Number,
       default: 0,
     },

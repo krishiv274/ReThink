@@ -97,7 +97,7 @@ export default function DeleteAccountModal({
           {/* Warning */}
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
             <p className="text-sm text-red-800">
-              <strong>Warning:</strong> This action cannot be undone. All your data, items, and achievements will be permanently deleted.
+              <strong>Warning:</strong> This action cannot be undone. All your data and items will be permanently deleted.
             </p>
           </div>
 

@@ -7,7 +7,6 @@ import {
   Leaf, 
   Recycle, 
   TrendingUp, 
-  Award, 
   Users, 
   Sparkles,
   ArrowRight,
@@ -27,14 +26,14 @@ export default function LandingPage() {
     },
     {
       icon: TrendingUp,
-      title: 'Earn Th!nk Tokens',
-      description: 'Get rewarded for every eco-friendly action you take and climb the leaderboard',
+      title: 'AI-Powered Ideas',
+      description: 'Get personalized reuse suggestions based on advanced image analysis',
       gradient: 'from-blue-400 to-cyan-600',
     },
     {
-      icon: Award,
-      title: 'Unlock Achievements',
-      description: 'Complete challenges and earn badges as you build your sustainable lifestyle',
+      icon: Sparkles,
+      title: 'Easy to Use',
+      description: 'Simple and intuitive interface to manage your sustainable journey',
       gradient: 'from-purple-400 to-pink-600',
     },
     {
@@ -48,7 +47,6 @@ export default function LandingPage() {
   const stats = [
     { value: '50K+', label: 'Items Recycled' },
     { value: '10K+', label: 'Active Users' },
-    { value: '2M+', label: 'Tokens Earned' },
     { value: '95%', label: 'Happy Users' },
   ];
 
@@ -182,11 +180,11 @@ export default function LandingPage() {
               >
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
-                    <Award className="w-5 h-5 text-emerald-600" />
+                    <Check className="w-5 h-5 text-emerald-600" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-gray-900">Eco Hero</div>
-                    <div className="text-xs text-gray-500">Achievement</div>
+                    <div className="text-sm font-semibold text-gray-900">Verified</div>
+                    <div className="text-xs text-gray-500">Sustainable</div>
                   </div>
                 </div>
               </motion.div>
@@ -245,7 +243,7 @@ export default function LandingPage() {
       {/* Stats Section */}
       <section className="py-20 px-6 bg-linear-to-r from-green-600 to-emerald-600">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}

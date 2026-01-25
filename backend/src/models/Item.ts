@@ -24,7 +24,6 @@ export interface IItem extends Document {
   completedIdeas: boolean[];
   aiAnalyzed: boolean;
   ideasCount: number;
-  thinkScore: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -81,11 +80,6 @@ const itemSchema = new Schema<IItem>(
       default: 0,
       min: [0, "Ideas count cannot be negative"],
     },
-    thinkScore: {
-      type: Number,
-      default: 0,
-      min: [0, "Think score cannot be negative"],
-    },
   },
   { 
     timestamps: true,
@@ -96,7 +90,6 @@ const itemSchema = new Schema<IItem>(
 
 // Compound index for efficient pagination queries
 itemSchema.index({ userId: 1, createdAt: -1 });
-itemSchema.index({ userId: 1, thinkScore: -1 });
 
 const Item = mongoose.model<IItem, IItemModel>("Item", itemSchema);
 

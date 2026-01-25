@@ -115,10 +115,10 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-green-50">
-      <Sidebar activeSection="profile" />
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar activeSection="rewards" />
       
-      <div className="flex-1 ml-64">
+      <div className="flex-1 ml-[200px]">
         <Header user={user} />
         
         <main className="p-8">

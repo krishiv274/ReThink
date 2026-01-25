@@ -54,7 +54,6 @@ const signup = async (req: Request, res: Response): Promise<void> => {
         avatar: newUser.avatar,
         bio: newUser.bio,
         ecoScore: newUser.ecoScore,
-        tokensEarned: newUser.tokensEarned,
         itemsUploaded: newUser.itemsUploaded,
       },
     });
@@ -105,7 +104,6 @@ const login = async (req: Request, res: Response): Promise<void> => {
         avatar: user.avatar,
         bio: user.bio,
         ecoScore: user.ecoScore,
-        tokensEarned: user.tokensEarned,
         itemsUploaded: user.itemsUploaded,
       },
     });
@@ -167,7 +165,6 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
         avatar: user.avatar,
         bio: user.bio,
         ecoScore: user.ecoScore,
-        tokensEarned: user.tokensEarned,
         itemsUploaded: user.itemsUploaded,
       },
     });
