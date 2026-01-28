@@ -16,16 +16,29 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
+    // Check if we need to reset monthly count (different month)
+    const now = new Date();
+    const lastReset = user.lastResetMonth ? new Date(user.lastResetMonth) : new Date(0);
+    
+    if (lastReset.getMonth() !== now.getMonth() || lastReset.getFullYear() !== now.getFullYear()) {
+      user.monthlyCompleted = 0;
+      user.lastResetMonth = now;
+      await user.save();
+    }
+
     res.status(200).json({
       message: "Profile fetched successfully",
       user: {
         id: user._id,
         username: user.username,
+        displayName: (user.displayName && user.displayName.trim()) || user.username,
         email: user.email,
         avatar: user.avatar,
         bio: user.bio,
-        ecoScore: user.ecoScore,
         itemsUploaded: user.itemsUploaded,
+        monthlyGoal: user.monthlyGoal,
+        monthlyCompleted: user.monthlyCompleted,
+        totalIdeasCompleted: user.totalIdeasCompleted,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
@@ -43,7 +56,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const { username, avatar, bio } = req.body;
+    const { username, displayName, avatar, bio, monthlyGoal } = req.body;
 
     // Find user
     const user = await User.findById(req.user._id);
@@ -64,8 +77,12 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
     }
 
     // Update fields if provided
+    if (displayName !== undefined) user.displayName = displayName;
     if (avatar !== undefined) user.avatar = avatar;
     if (bio !== undefined) user.bio = bio;
+    if (monthlyGoal !== undefined && monthlyGoal >= 1 && monthlyGoal <= 100) {
+      user.monthlyGoal = monthlyGoal;
+    }
 
     await user.save();
 
@@ -74,11 +91,14 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       user: {
         id: user._id,
         username: user.username,
+        displayName: (user.displayName && user.displayName.trim()) || user.username,
         email: user.email,
         avatar: user.avatar,
         bio: user.bio,
-        ecoScore: user.ecoScore,
         itemsUploaded: user.itemsUploaded,
+        monthlyGoal: user.monthlyGoal,
+        monthlyCompleted: user.monthlyCompleted,
+        totalIdeasCompleted: user.totalIdeasCompleted,
         updatedAt: user.updatedAt,
       },
     });
@@ -106,8 +126,8 @@ export const getPublicProfile = async (req: Request, res: Response): Promise<voi
         username: user.username,
         avatar: user.avatar,
         bio: user.bio,
-        ecoScore: user.ecoScore,
         itemsUploaded: user.itemsUploaded,
+        totalIdeasCompleted: user.totalIdeasCompleted,
         createdAt: user.createdAt,
       },
     });

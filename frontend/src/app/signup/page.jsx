@@ -35,7 +35,7 @@ export default function SignupPage() {
     try {
       const result = await api.signup(formData);
       if (result.message === "Signup successful") {
-        router.push("/dashboard");
+        router.push("/home");
       } else {
         setError(result.message || "Signup failed");
       }

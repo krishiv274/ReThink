@@ -39,7 +39,7 @@ const LoginPage = () => {
       if (formData.rememberMe) {
         localStorage.setItem('rememberMe', 'true');
       }
-      router.push('/dashboard');
+      router.push('/home');
     } catch (err) {
       setError(err?.message || 'Failed to log in');
     } finally {

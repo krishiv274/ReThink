@@ -143,7 +143,7 @@ export default function ItemsGrid() {
 
   // View item detail
   const handleViewItem = (item) => {
-    router.push(`/dashboard/items/${item._id}`);
+    router.push(`/home/items/${item._id}`);
   };
 
   // Open edit modal with item data

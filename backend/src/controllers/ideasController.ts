@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Item from "../models/Item";
+import User from "../models/User";
 import { generateReuseIdeas } from "../services/geminiService";
 
 //
@@ -260,6 +261,25 @@ export const completeIdea = async (req: Request, res: Response) => {
     item.markModified("completedIdeas");
 
     await item.save();
+
+    // Update user's monthly progress
+    const user = await User.findById(userId);
+    if (user) {
+      const now = new Date();
+      const lastReset = user.lastResetMonth ? new Date(user.lastResetMonth) : new Date(0);
+      
+      // Check if we need to reset monthly count (different month)
+      if (lastReset.getMonth() !== now.getMonth() || lastReset.getFullYear() !== now.getFullYear()) {
+        user.monthlyCompleted = 0;
+        user.lastResetMonth = now;
+      }
+      
+      // Increment counters
+      user.monthlyCompleted = (user.monthlyCompleted || 0) + 1;
+      user.totalIdeasCompleted = (user.totalIdeasCompleted || 0) + 1;
+      
+      await user.save();
+    }
 
     res.status(200).json({
       message: "Idea marked as completed",

@@ -3,12 +3,17 @@ import argon2 from "argon2";
 
 export interface IUser extends Document {
   username: string;
+  displayName: string;
   email: string;
   password: string;
   avatar?: string;
   bio?: string;
-  ecoScore: number;
   itemsUploaded: number;
+  // Monthly goal tracking
+  monthlyGoal: number;
+  monthlyCompleted: number;
+  lastResetMonth: Date;
+  totalIdeasCompleted: number;
   createdAt: Date;
   updatedAt: Date;
 
@@ -25,6 +30,12 @@ const userSchema = new mongoose.Schema<IUser>(
       unique: true,
       trim: true,
       minlength: [5, "Username must be at least 5 characters long"],
+    },
+    displayName: {
+      type: String,
+      default: "",
+      trim: true,
+      maxlength: [50, "Display name cannot exceed 50 characters"],
     },
     email: {
       type: String,
@@ -49,17 +60,38 @@ const userSchema = new mongoose.Schema<IUser>(
       default: "",
       maxlength: [500, "Bio cannot exceed 500 characters"],
     },
-    ecoScore: {
+    itemsUploaded: {
       type: Number,
       default: 0,
     },
-    itemsUploaded: {
+    // Monthly goal tracking
+    monthlyGoal: {
+      type: Number,
+      default: 10,
+    },
+    monthlyCompleted: {
+      type: Number,
+      default: 0,
+    },
+    lastResetMonth: {
+      type: Date,
+      default: () => new Date(),
+    },
+    totalIdeasCompleted: {
       type: Number,
       default: 0,
     },
   },
   { timestamps: true }
 );
+
+// Set displayName to username if empty
+userSchema.pre("save", function (next) {
+  if (!this.displayName || this.displayName.trim() === "") {
+    this.displayName = this.username;
+  }
+  next();
+});
 
 // Hash password before saving to database
 userSchema.pre("save", async function (next) {

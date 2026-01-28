@@ -50,11 +50,14 @@ const signup = async (req: Request, res: Response): Promise<void> => {
       user: {
         id: newUser._id,
         username: newUser.username,
+        displayName: (newUser.displayName && newUser.displayName.trim()) || newUser.username,
         email: newUser.email,
         avatar: newUser.avatar,
         bio: newUser.bio,
-        ecoScore: newUser.ecoScore,
         itemsUploaded: newUser.itemsUploaded,
+        monthlyGoal: newUser.monthlyGoal,
+        monthlyCompleted: newUser.monthlyCompleted,
+        totalIdeasCompleted: newUser.totalIdeasCompleted,
       },
     });
     return;
@@ -100,11 +103,14 @@ const login = async (req: Request, res: Response): Promise<void> => {
       user: {
         id: user._id,
         username: user.username,
+        displayName: (user.displayName && user.displayName.trim()) || user.username,
         email: user.email,
         avatar: user.avatar,
         bio: user.bio,
-        ecoScore: user.ecoScore,
         itemsUploaded: user.itemsUploaded,
+        monthlyGoal: user.monthlyGoal,
+        monthlyCompleted: user.monthlyCompleted,
+        totalIdeasCompleted: user.totalIdeasCompleted,
       },
     });
     return;
@@ -161,11 +167,14 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
       user: {
         id: user._id,
         username: user.username,
+        displayName: (user.displayName && user.displayName.trim()) || user.username,
         email: user.email,
         avatar: user.avatar,
         bio: user.bio,
-        ecoScore: user.ecoScore,
         itemsUploaded: user.itemsUploaded,
+        monthlyGoal: user.monthlyGoal,
+        monthlyCompleted: user.monthlyCompleted,
+        totalIdeasCompleted: user.totalIdeasCompleted,
       },
     });
   } catch (error: any) {
