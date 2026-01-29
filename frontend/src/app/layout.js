@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "ReTh!nk - AI-Powered Sustainable Living",
+  title: "ReTh!nk • Give Your Items a Second Life",
   description: "Discover creative reuse ideas with AI",
 };
 
