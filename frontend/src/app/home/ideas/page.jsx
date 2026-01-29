@@ -19,6 +19,7 @@ import {
 import { api } from '@/lib/api';
 import { formatIdea } from '@/lib/formatAI';
 import { useAuth } from '@/hooks/useAuth';
+import { useSidebar } from '@/contexts/SidebarContext';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import { ItemFormModal } from '@/components/items';
@@ -26,6 +27,7 @@ import { ItemFormModal } from '@/components/items';
 export default function MyIdeasPage() {
   const router = useRouter();
   const { user, loading: authLoading, refreshUser } = useAuth();
+  const { isOpen: sidebarOpen } = useSidebar();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedItems, setExpandedItems] = useState({});
@@ -119,7 +121,10 @@ export default function MyIdeasPage() {
     <div className="flex min-h-screen bg-[#f8faf8]">
       <Sidebar activeSection="ideas" />
       
-      <main className="flex-1 flex flex-col min-h-screen">
+      <main 
+        className="flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out"
+        style={{ marginLeft: sidebarOpen ? '240px' : '0' }}
+      >
         <Header user={user} />
         
         <div className="flex-1 overflow-y-auto p-6 lg:p-8">

@@ -32,7 +32,6 @@ export async function generateReuseIdeas(
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
       const { title, material, imageUrl } = input;
-      console.log(`🔁 Attempt ${attempt + 1} of ${maxRetries + 1}`);
 
       // ---- 1. Load Image ----
       const { imageBase64, mimeType } = await loadImage(imageUrl);
@@ -57,7 +56,6 @@ export async function generateReuseIdeas(
       // ---- 5. Parse Output ----
       const text = result.response.text();
       if (!text) throw new Error("Empty Gemini response");
-      console.log(`✅ Gemini responded (${text.length} chars)`);
 
       const { ideas, difficulties } = parseIdeasFromText(text);
 
@@ -72,7 +70,6 @@ export async function generateReuseIdeas(
 
       if (attempt < maxRetries) {
         const backoff = 2000 * (attempt + 1);
-        console.log(`⏳ Retrying in ${backoff / 1000}s...`);
         await sleep(backoff);
       }
     }

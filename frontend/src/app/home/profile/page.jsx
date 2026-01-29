@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
+import { useSidebar } from '@/contexts/SidebarContext';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import { motion } from 'framer-motion';
@@ -28,6 +29,7 @@ import {
 export default function ProfilePage() {
   const router = useRouter();
   const { user, loading: authLoading, refreshUser } = useAuth();
+  const { isOpen: sidebarOpen } = useSidebar();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
@@ -189,7 +191,10 @@ export default function ProfilePage() {
     <div className="flex min-h-screen bg-[#f8faf8]">
       <Sidebar activeSection="profile" />
       
-      <main className="flex-1 flex flex-col min-h-screen">
+      <main 
+        className="flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out"
+        style={{ marginLeft: sidebarOpen ? '240px' : '0' }}
+      >
         <Header user={user} />
         
         <div className="flex-1 overflow-y-auto p-6 lg:p-8">

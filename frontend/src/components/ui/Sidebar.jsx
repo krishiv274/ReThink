@@ -9,7 +9,8 @@ import {
   LogOut,
   Menu,
   X,
-  Sparkles
+  Sparkles,
+  Recycle
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
@@ -133,7 +134,7 @@ export default function Sidebar({ activeSection }) {
                 className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
               >
                 <div className="w-9 h-9 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/30">
-                  <span className="text-white font-bold text-lg">R</span>
+                  <Recycle className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold text-gray-900">ReTh!nk</span>
               </button>

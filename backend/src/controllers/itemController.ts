@@ -42,9 +42,13 @@ export const getMyItems = async (req: Request, res: Response): Promise<void> => 
       filter.material = material;
     }
 
-    // Add search filter if provided
+    // Add search filter if provided - search both title AND material
     if (search && search.trim()) {
-      filter.title = { $regex: search.trim(), $options: "i" };
+      const searchRegex = { $regex: search.trim(), $options: "i" };
+      filter.$or = [
+        { title: searchRegex },
+        { material: searchRegex }
+      ];
     }
 
     // Determine sort order

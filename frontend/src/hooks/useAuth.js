@@ -28,15 +28,14 @@ export function useAuth() {
       if (result.user) {
         setUser(result.user);
       } else {
+        // No user returned, redirect to login
         router.push('/login');
       }
     } catch (err) {
       console.error('Auth check failed:', err);
       setError(err.message || 'Authentication failed');
-      
-      if (err.message?.includes('Session expired') || err.message?.includes('Unauthorized')) {
-        router.push('/login');
-      }
+      // Always redirect to login on any auth error
+      router.push('/login');
     } finally {
       setLoading(false);
     }

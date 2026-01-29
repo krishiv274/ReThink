@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import { useSidebar } from '@/contexts/SidebarContext';
+import { api } from '@/lib/api';
 import Sidebar from '@/components/ui/Sidebar';
 import Header from '@/components/ui/Header';
 import { ItemFormModal } from '@/components/items';
@@ -36,6 +38,7 @@ const TIPS = [
 export default function HomePage() {
   const router = useRouter();
   const { user, loading } = useAuth();
+  const { isOpen: sidebarOpen } = useSidebar();
   const [recentIdeas, setRecentIdeas] = useState([]);
   const [ideasLoading, setIdeasLoading] = useState(true);
   const [tipIndex, setTipIndex] = useState(0);
@@ -63,14 +66,8 @@ export default function HomePage() {
   useEffect(() => {
     const fetchRecentIdeas = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/items/me?sortBy=date&limit=8`, {
-          credentials: 'include',
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setRecentIdeas(data.items || []);
-        }
+        const result = await api.getMyItems({ sortBy: 'date', limit: 8 });
+        setRecentIdeas(result.items || []);
       } catch (error) {
         console.error('Error fetching recent ideas:', error);
       } finally {
@@ -96,18 +93,7 @@ export default function HomePage() {
     setUploadLoading(true);
     setUploadError('');
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/items`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create item');
-      }
-
-      const result = await response.json();
+      const result = await api.createItem(formData);
       setShowUploadModal(false);
       router.push(`/home/items/${result.item._id}`);
     } catch (error) {
@@ -167,7 +153,10 @@ export default function HomePage() {
     <div className="flex min-h-screen bg-[#f8faf8]">
       <Sidebar activeSection="home" />
       
-      <main className="flex-1 flex flex-col min-h-screen">
+      <main 
+        className="flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out"
+        style={{ marginLeft: sidebarOpen ? '240px' : '0' }}
+      >
         <Header user={user} />
         
         <div className="flex-1 overflow-y-auto p-6 lg:p-8">

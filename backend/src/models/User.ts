@@ -14,6 +14,13 @@ export interface IUser extends Document {
   monthlyCompleted: number;
   lastResetMonth: Date;
   totalIdeasCompleted: number;
+  // OAuth fields
+  googleId?: string;
+  authProvider: 'local' | 'google';
+  // Password reset fields
+  resetToken?: string;
+  resetTokenExpiry?: Date;
+
   createdAt: Date;
   updatedAt: Date;
 
@@ -48,7 +55,9 @@ const userSchema = new mongoose.Schema<IUser>(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: function(this: IUser) {
+        return this.authProvider === 'local';
+      },
       minlength: [6, "Password must be at least 6 characters long"],
     },
     avatar: {
@@ -81,6 +90,24 @@ const userSchema = new mongoose.Schema<IUser>(
       type: Number,
       default: 0,
     },
+    // OAuth fields
+    googleId: {
+      type: String,
+      sparse: true,
+    },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google'],
+      default: 'local',
+    },
+    // Password reset fields
+    resetToken: {
+      type: String,
+    },
+    resetTokenExpiry: {
+      type: Date,
+    },
+
   },
   { timestamps: true }
 );
@@ -95,7 +122,7 @@ userSchema.pre("save", function (next) {
 
 // Hash password before saving to database
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); // only hash if changed or new
+  if (!this.isModified("password") || !this.password) return next();
 
   this.password = await argon2.hash(this.password, { type: argon2.argon2id });
   next();
@@ -103,6 +130,7 @@ userSchema.pre("save", async function (next) {
 
 // Compare entered password with hashed one
 userSchema.methods.matchPassword = async function (enteredPassword: string) {
+  if (!this.password) return false;
   return await argon2.verify(this.password, enteredPassword);
 };
 

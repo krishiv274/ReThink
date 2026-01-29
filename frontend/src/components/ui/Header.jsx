@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Search, X, Loader2, Recycle, Sparkles } from 'lucide-react';
+import { Search, X, Loader2, Recycle, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -77,7 +77,7 @@ export default function Header({ user }) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => searchResults.length > 0 && setShowResults(true)}
-              placeholder="Search items and ideas..."
+              placeholder="Search items by name or material..."
               className="w-full pl-12 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all placeholder:text-gray-400"
             />
             {searchQuery && (
@@ -150,11 +150,6 @@ export default function Header({ user }) {
 
         {/* Right Section */}
         <div className="flex items-center gap-3">
-          {/* Notification Bell */}
-          <button className="relative p-2 hover:bg-gray-50 rounded-full transition-colors">
-            <Bell className="w-5 h-5 text-gray-600" />
-          </button>
-
           {/* User Avatar */}
           <button 
             onClick={() => router.push('/home/profile')}

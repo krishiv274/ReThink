@@ -20,6 +20,13 @@ export const refreshCookieOptions: CookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
 
+// Long-lived refresh cookie for "Remember Me" (30 days)
+export const longRefreshCookieOptions: CookieOptions = {
+  ...baseCookieOptions,
+  path: "/api/auth/refresh",           
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+};
+
 export const clearAccessCookieOptions: CookieOptions = {
   ...baseCookieOptions,
   path: "/",

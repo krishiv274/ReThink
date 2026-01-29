@@ -3,20 +3,23 @@ import type { Request, Response } from "express";
 import {
   accessCookieOptions,
   refreshCookieOptions,
+  longRefreshCookieOptions,
   clearAccessCookieOptions,
   clearRefreshCookieOptions,
 } from "../utils/cookieOptions";
 import {
   signAccessToken,
   signRefreshToken,
+  signLongRefreshToken,
   verifyRefreshToken,
 } from "../utils/token";
 
 // SIGNUP
 const signup = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { username, email, password } = req.body as {
+    const { username, displayName, email, password } = req.body as {
       username: string;
+      displayName?: string;
       email: string;
       password: string;
     };
@@ -35,7 +38,13 @@ const signup = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const newUser = await User.create({ username, email, password });
+    const newUser = await User.create({ 
+      username, 
+      displayName: displayName || username, 
+      email, 
+      password,
+      authProvider: 'local',
+    });
 
     // Generate JWT
     const accessToken = signAccessToken(newUser._id.toString());
@@ -58,6 +67,7 @@ const signup = async (req: Request, res: Response): Promise<void> => {
         monthlyGoal: newUser.monthlyGoal,
         monthlyCompleted: newUser.monthlyCompleted,
         totalIdeasCompleted: newUser.totalIdeasCompleted,
+        authProvider: newUser.authProvider,
       },
     });
     return;
@@ -69,9 +79,10 @@ const signup = async (req: Request, res: Response): Promise<void> => {
 // LOGIN
 const login = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { identifier, password } = req.body as {
+    const { identifier, password, rememberMe } = req.body as {
       identifier: string;
       password: string;
+      rememberMe?: boolean;
     };
 
     if (!identifier || !password) {
@@ -90,13 +101,23 @@ const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    // Check if this is a Google-only account trying to use password login
+    if (user.authProvider === 'google' && !user.password) {
+      res.status(401).json({ message: "Please use Google to sign in" });
+      return;
+    }
+
     // Generate JWT
     const accessToken = signAccessToken(user._id.toString());
-    const refreshToken = signRefreshToken(user._id.toString());
+    
+    // Use long-lived token if "Remember Me" is checked
+    const refreshToken = rememberMe 
+      ? signLongRefreshToken(user._id.toString())
+      : signRefreshToken(user._id.toString());
 
-    // Set cookies
+    // Set cookies with appropriate expiry
     res.cookie("accessToken", accessToken, accessCookieOptions);
-    res.cookie("refreshToken", refreshToken, refreshCookieOptions);
+    res.cookie("refreshToken", refreshToken, rememberMe ? longRefreshCookieOptions : refreshCookieOptions);
 
     res.status(200).json({
       message: "Login successful",
@@ -111,6 +132,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
         monthlyGoal: user.monthlyGoal,
         monthlyCompleted: user.monthlyCompleted,
         totalIdeasCompleted: user.totalIdeasCompleted,
+        authProvider: user.authProvider,
       },
     });
     return;
@@ -175,6 +197,7 @@ const getProfile = async (req: Request, res: Response): Promise<void> => {
         monthlyGoal: user.monthlyGoal,
         monthlyCompleted: user.monthlyCompleted,
         totalIdeasCompleted: user.totalIdeasCompleted,
+        authProvider: user.authProvider,
       },
     });
   } catch (error: any) {
